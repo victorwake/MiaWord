@@ -9,22 +9,22 @@
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css"/>
-    <link href="054888a74685b7c90cb6.css" rel="stylesheet" type="text/css" />
+    <link href="taskpane.css" rel="stylesheet" type="text/css" />
     <script src="taskpane.js"></script>
 </head>
 
 <body class="ms-font-m ms-welcome ms-Fabric">
     <header class="ms-welcome__header ms-bgColor-neutralLighter">
-        <img width="90" height="90" src="./assets/logo-filled.png" alt="MIAbogado" title="MIAbogado" />
+        <img width="90" height="90" src="../../assets/logo-filled.png" alt="MIAbogado" title="MIAbogado" />
         <h1 class="ms-font-su">MIA</h1>
     </header>
     <main id="app-body" class="ms-welcome__main" style="display: none;">
         <h2 class="ms-font-xl">El Socio Legal  que te hace ganar más.</h2>
         <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl mb">
             <span class="ms-Button-label">Enviar</span>
-            <div id="loadingMessage" style="display:none;">Enviando...</div>
         </div>
         <div id="response-container"></div>
+        <div id="loadingMessage" class="loader" style="display:none;"></div>
          <!-- Formulario de autenticación oculto -->
          <div id="auth-dialog" style="display: none;">
             <label for="authTokenInput">Ingrese su token de autenticación:</label>
