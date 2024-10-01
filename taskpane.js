@@ -33,7 +33,7 @@ async function run() {
 
 function sendTextToServer(authToken, text) {
   console.log("Enviando authToken:", authToken);
-  $("#loadingMessage").show();
+  showLoadingMessage();
   $.ajax({
     url: "https://servidor-complemento.onrender.com/api/text",
     type: "POST",
@@ -61,7 +61,7 @@ function sendTextToServer(authToken, text) {
 }
 
 function sendAuthToken(authToken) {
-  $("#loadingMessage").show();
+  showLoadingMessage();
   $.ajax({
     url: "https://servidor-complemento.onrender.com/api/authtoken",
     type: "POST",
@@ -93,6 +93,10 @@ function sendAuthToken(authToken) {
 }
 function hideLoadingMessage() {
   document.getElementById("loadingMessage").style.display = "none";
+}
+
+function showLoadingMessage() {
+  document.getElementById("loadingMessage").style.display = "block";
 }
 
 function showAuthTokenDialog() {
