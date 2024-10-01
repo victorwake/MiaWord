@@ -40,10 +40,11 @@ function sendTextToServer(authToken, text) {
     contentType: "application/json",
     data: JSON.stringify({ text: text, authToken: authToken }),
     success: function (response) {
-      $("#loadingMessage").hide();
+      hideLoadingMessage();
       displayResponse(response);
     },
     error: function (xhr, status, error) {
+      hideLoadingMessage();
       let errorMessage;
       if (xhr.status === 401) {
         errorMessage = xhr.responseJSON.message;
@@ -53,19 +54,25 @@ function sendTextToServer(authToken, text) {
       }
       displayResponse({ message: errorMessage });
     },
+    complete: function () {
+      hideLoadingMessage();
+    },
   });
 }
 
 function sendAuthToken(authToken) {
+  $("#loadingMessage").show();
   $.ajax({
     url: "https://servidor-complemento.onrender.com/api/authtoken",
     type: "POST",
     contentType: "application/json",
     data: JSON.stringify({ authToken: authToken }),
     success: function (response) {
+      hideLoadingMessage();
       displayResponse(response);
     },
     error: function (xhr, status, error) {
+      hideLoadingMessage();
       const errorContainer = document.getElementById("error-message");
       let errorMessage;
 
@@ -79,7 +86,13 @@ function sendAuthToken(authToken) {
       errorContainer.innerText = errorMessage;
       errorContainer.style.display = "block";
     },
+    complete: function () {
+      hideLoadingMessage();
+    },
   });
+}
+function hideLoadingMessage() {
+  document.getElementById("loadingMessage").style.display = "none";
 }
 
 function showAuthTokenDialog() {
