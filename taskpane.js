@@ -92,11 +92,11 @@ function sendAuthToken(authToken) {
   });
 }
 function hideLoadingMessage() {
-  document.getElementById("loadingMessage").style.display = "none";
+  document.getElementById("loading-message").style.display = "none";
 }
 
 function showLoadingMessage() {
-  document.getElementById("loadingMessage").style.display = "block";
+  document.getElementById("loading-message").style.display = "block";
 }
 
 function showAuthTokenDialog() {
