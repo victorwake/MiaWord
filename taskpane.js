@@ -129,3 +129,4 @@ function displayResponse(response) {
     responseContainer.innerText = "No response from server.";
   }
 }
+
