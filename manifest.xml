@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
-  <Id>a6efe1ad-e934-4728-b9d1-aab69e17c0d9</Id>
+  <Id>d2ff8360-f2bc-4931-9d00-fe96fc6e7046</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Contoso</ProviderName>
-  <DefaultLocale>en-US</DefaultLocale>
+  <ProviderName>ecix</ProviderName>
+  <DefaultLocale>es-ES</DefaultLocale>
   <DisplayName DefaultValue="MIAbogado"/>
-  <Description DefaultValue="A template to get started."/>
+  <Description DefaultValue="Inteligencia Artificial que responde consultas legales."/>
   <IconUrl DefaultValue="https://www.contoso.com/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://www.contoso.com/assets/icon-64.png"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
   <AppDomains>
     <AppDomain>https://www.contoso.com</AppDomain>
+    <AppDomain>https://servidor-complemento.onrender.com</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Document"/>
@@ -72,13 +73,13 @@
         <bt:Url id="Taskpane.Url" DefaultValue="https://www.contoso.com/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
-        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
+        <bt:String id="GetStarted.Title" DefaultValue="El Socio Legal  que te hace ganar más."/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="ecix"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="MIAbogado"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded succesfully. Go to the HOME tab and click the 'Show Taskpane' button to get started."/>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
+        <bt:String id="GetStarted.Description" DefaultValue="Inteligencia Artificial que responde consultas legales, te ahorra el 80% de tu tiempo al crear contratos, revisar documentación jurídica y ejecutar Due Diligence por ti con la precisión que necesitas, en cualquier idioma y sin complicaciones.."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Abrir MIAbogado"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
