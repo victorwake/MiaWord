@@ -432,12 +432,11 @@ b {
    /* height: 100vh; */
    min-height: 600px;
    margin: 0 auto;
-   border: 1px solid #ddd;
+   /* border: 1px solid #ddd; */
    border-radius: 10px;
    background-color: #f9f9f9;
-   box-shadow: 2px 2px 5px 0px rgba(158, 158, 158, 0.356);
-     -webkit-box-shadow: 2px 2px 5px 0px rgba(158, 158, 158, 0.356);
-     -moz-box-shadow: 2px 2px 5px 0px rgba(158, 158, 158, 0.356);
+   -webkit-box-shadow: 5px 5px 14px 5px rgba(226,226,226,0.63); 
+    box-shadow: 5px 5px 14px 5px rgba(226,226,226,0.63);
  }
  
  /* Caja que contiene los mensajes */
@@ -715,6 +714,14 @@ b {
      -moz-box-shadow: 2px 2px 5px 0px rgba(158, 158, 158, 0.356);
   }
 
+  .container-shadow{
+    margin: 5px;
+    padding: 15px 10px;
+    border-radius: 5px;
+    -webkit-box-shadow: 5px 5px 14px 5px rgba(226,226,226,0.63); 
+    box-shadow: 5px 5px 14px 5px rgba(226,226,226,0.63);
+  }
+
   .badge{
     border: 1px solid #DFE2E5;
     height: 28px;
@@ -793,7 +800,7 @@ b {
     -ms-user-select: none;     /* Internet Explorer/Edge */
 }
 
-select {
+/* select {
   border: none;
   background-color: transparent;
   padding: 3px; 
@@ -802,8 +809,8 @@ select {
 }
 
 select:focus {
-  outline: none; /* Elimina el borde del foco al hacer clic en el select */
-}
+  outline: none;
+} */
 
 
 .box-description span{
@@ -836,6 +843,31 @@ select:focus {
   font-weight: 600;
   cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
   transition: background-color 0.3s ease; 
+}
+
+.btn-cerrar{
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 30px;
+  width: 70px;
+  padding: 7px;
+  color: #fcfcfc;
+  font-size: 0.8rem !important;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+}
+
+.box-select{
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-cerrar:hover{
+  background-color: #058521 !important;
 }
 
 .btn-green{
@@ -941,6 +973,157 @@ select:focus {
   }
 
   .box-grey{
+    display: none;
+  }
+}
+
+.classify-document {
+  width: 100%;
+}
+
+.classify-document-box {
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.classify-document-container {
+  cursor: pointer;
+  display: flex; /* Usamos flexbox para alineación */
+  align-items: center; /* Centra el contenido verticalmente */
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.classify-document-box span {
+  font-size: 12px;
+}
+
+#classify-document-body {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease; /* Suaviza la expansión y colapso */
+}
+
+.icon-chevron-right {
+  font-size: 16px !important;
+  display: inline-block; /* Permite transformaciones */
+  transition: transform 0.3s ease; /* Suaviza la rotación */
+  cursor: pointer;
+}
+
+.rotated {
+  transform: rotate(90deg) !important; /* Forza la rotación a 45 grados */
+}
+
+.font-select-label{
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #6f7680;
+}
+
+.custom-paragraph {
+  text-align: justify;
+  line-height: 34.35pt;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-text{
+  font-size: 0.8rem !important;
+  font-weight: 800;
+}
+
+.right-text {
+  font-weight: 600;
+  color: #5E9D56;
+}
+
+.w-600{
+  font-weight: 800 !important;
+  margin-right: 3px;
+  color: #5E9D56;
+}
+
+.c-p{
+  cursor: pointer;
+}
+
+.spin-animation {
+  display: inline-block;
+  animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ##############################################################################################
+                              Select para el clasificador el documento
+ ############################################################################################## */
+.select {
+  border-radius: 5px;
+  position: relative;
+  height: 28px;
+  background: #EDEDED;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Evita que elementos adicionales salgan del contenedor */
+}
+
+/* Estilos del select */
+.select select {
+  font-size: 14px;
+  border: none;
+  box-shadow: none;
+  border-radius: 5px;
+  background: #EDEDED;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  padding-right: 35px;
+  padding-left: 15px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Flecha personalizada */
+.select::after {
+  content: ">";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg) scaleY(1.5);
+  font-size: 14px;
+  color: #666;
+  pointer-events: none;
+}
+
+/* Opcional: cambiar borde al hacer clic */
+.select select:focus {
+  border: 1px solid #40a04d6e;
+}
+
+/* Hack para algunos navegadores que muestran la flecha */
+.select select::-ms-expand {
+  display: none;
+}
+
+/* Compatibilidad para IE */
+@media all and (min-width: 0\0) and (min-resolution: 0.001dpcm) {
+  .select select {
+    padding-right: 0;
+  }
+  .select:after, .select:before {
     display: none;
   }
 }
