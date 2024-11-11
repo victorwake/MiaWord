@@ -22,7 +22,7 @@ Office.onReady((info) => {
 
     document.getElementById("get-classify-auto").onclick = handleSendDoc;
 
-    document.getElementById("enviar-texto").onclick = handleSendText;
+    // document.getElementById("enviar-texto").onclick = handleSendText;
     document.getElementById("clean-document").onclick = newChat;
     document.getElementById("revisa-btn").onclick = getWordText;
     document.getElementById("document-forward").addEventListener("click", handleSendAllText);
@@ -67,23 +67,23 @@ export async function run() {
   });
 }
 
-function handleSendText() {
-  Word.run(async (context) => {
-    const selection = context.document.getSelection();
-    selection.load("text");
+// function handleSendText() {
+//   Word.run(async (context) => {
+//     const selection = context.document.getSelection();
+//     selection.load("text");
 
-    await context.sync();
+//     await context.sync();
 
-    const authToken = localStorage.getItem("authTokenMia");
-    const selectedText = selection.text.trim();
+//     const authToken = localStorage.getItem("authTokenMia");
+//     const selectedText = selection.text.trim();
 
-    if (selectedText.length === 0) {
-      displayResponseText({ message: "No hay texto seleccionado." });
-    } else {
-      sendTextToServer(authToken, selectedText);
-    }
-  });
-}
+//     if (selectedText.length === 0) {
+//       displayResponseText({ message: "No hay texto seleccionado." });
+//     } else {
+//       sendTextToServer(authToken, selectedText);
+//     }
+//   });
+// }
 
 function toggleDocumentBox() {
   const icon = document.querySelector(".icon-chevron-right");
@@ -122,12 +122,26 @@ function hideAuthToken() {
   document.getElementById("bg-color").style.display = "none";
 }
 
-function errorMessage() {
-  document.getElementById("error-message").style.display = "none";
-}
+// function errorMessage() {
+//   document.getElementById("error-message").style.display = "none";
+// }
 
 //End Hiden section
 // #############################################################################################
+// unauthorizedToken
+// function showUnauthorizedToken() {
+//   document.getElementById("auth-token").style.display = "block";
+//   document.getElementById("bg-color").style.display = "flex";
+//   // showClassifyDocument();
+//   // document.getElementById("classify-document").style.display = "block";
+// }
+
+// function hideUnauthorizedToken() {
+//   document.getElementById("auth-token").style.display = "none";
+//   document.getElementById("bg-color").style.display = "none";
+//   document.getElementById("tabs").style.display = "none";
+//   document.getElementById("tabs-stage").style.display = "none";
+// }
 
 //Show section
 function showLoadingMessage() {
@@ -156,27 +170,25 @@ function showResponseToken() {
   document.getElementById("response-token").style.display = "block";
 }
 
-function showResponseSession() {
-  document.getElementById("response-session").style.display = "block";
-}
+// function showResponseSession() {
+//   document.getElementById("response-session").style.display = "block";
+// }
 
 function hideResponseSession() {
   document.getElementById("response-session").style.display = "none";
 }
 //End Show section
-function showClassifyDocument() {
-  const element = document.getElementById("classify-document");
-  if (element) {
-    element.classList.remove("display-none");
-  }
-}
+// function showClassifyDocument() {
+//   const element = document.getElementById("classify-document");
+//   element.classList.remove("display-none");
+// }
 
-function hideClassifyDocument() {
-  const element = document.getElementById("classify-document");
-  if (element) {
-    element.classList.add("display-none");
-  }
-}
+// function hideClassifyDocument() {
+//   const element = document.getElementById("classify-document");
+//   if (element) {
+//     element.classList.add("display-none");
+//   }
+// }
 
 // #############################################################################################
 
@@ -244,6 +256,10 @@ function loginProcess(emailUser, passwordUser) {
         if (accessToken) {
           localStorage.setItem("authTokenMia", accessToken);
           displayAuthResponse();
+          getGenerativeClassifierConfig();
+          setTimeout(function () {
+            document.getElementById("classify-document").style.display = "block";
+          }, 2100);
         } else {
           // Mensaje de error genérico si no hay token (aunque no debería ocurrir con credenciales válidas)
           console.error("Token de acceso no encontrado en la respuesta.");
@@ -255,6 +271,7 @@ function loginProcess(emailUser, passwordUser) {
     },
     error: function (xhr) {
       hideLoadingMessage();
+      console.log("Estado del xhr ", xhr);
       const errorContainer = document.getElementById("error-message-server");
       errorContainer.innerText = "Error del servidor.";
       errorContainer.style.display = "block";
@@ -321,7 +338,8 @@ function isAuthTokenAvailable(authToken) {
     hideLoadingMessage();
     hideLoadingIndex();
     showTabs();
-    showClassifyDocument();
+    // showClassifyDocument();
+    document.getElementById("classify-document").style.display = "block";
     return localStorage.getItem("authTokenMia") !== null;
   } else {
     hideLoadingMessage();
@@ -330,20 +348,20 @@ function isAuthTokenAvailable(authToken) {
   }
 }
 
-function displayResponseVilidToken(response) {
-  const responseContainer = document.getElementById("response-token");
-  if (response && response.message) {
-    responseContainer.innerText = response.message;
-    errorMessage();
-    showResponseToken();
-    if (response.message === "token autenticado con exito") {
-      hideAuthToken();
-      showTabs();
-    }
-  } else {
-    responseContainer.innerText = "No response from server.";
-  }
-}
+// function displayResponseVilidToken(response) {
+//   const responseContainer = document.getElementById("response-token");
+//   if (response && response.message) {
+//     responseContainer.innerText = response.message;
+//     errorMessage();
+//     showResponseToken();
+//     if (response.message === "token autenticado con exito") {
+//       hideAuthToken();
+//       showTabs();
+//     }
+//   } else {
+//     responseContainer.innerText = "No response from server.";
+//   }
+// }
 
 function validateAndSubmitLogin() {
   const emailUser = document.getElementById("emailUser").value.trim();
@@ -372,22 +390,22 @@ function validateAndSubmitLogin() {
   // hideAuthTokenDialog();
 }
 
-function displayResponse(response) {
-  const responseContainer = document.getElementById("response-token");
-  if (response && response.message) {
-    responseContainer.innerText = response.message;
-    errorMessage();
-    showResponseToken();
-    if (response.message === "token autenticado con exito") {
-      setTimeout(function () {
-        hideAuthToken();
-        showTabs();
-      }, 2000);
-    }
-  } else {
-    responseContainer.innerText = "No response from server.";
-  }
-}
+// function displayResponse(response) {
+//   const responseContainer = document.getElementById("response-token");
+//   if (response && response.message) {
+//     responseContainer.innerText = response.message;
+//     errorMessage();
+//     showResponseToken();
+//     if (response.message === "token autenticado con exito") {
+//       setTimeout(function () {
+//         hideAuthToken();
+//         showTabs();
+//       }, 2000);
+//     }
+//   } else {
+//     responseContainer.innerText = "No response from server.";
+//   }
+// }
 
 // function hideAuthTokenDialog() {
 //   document.getElementById("response-token").innerText = " ";
@@ -408,85 +426,14 @@ function handleDeletToken() {
   }, 2000);
 }
 
+// function unauthorizedToken() {
+//   localStorage.removeItem("authTokenMia");
+//   hideUnauthorizedToken();
+//   showUnauthorizedToken();
+// }
+
 function getAuthToken() {
   return localStorage.getItem("authTokenMia");
-}
-
-// Función para enviar texto al servidor.
-function sendTextToServer(text) {
-  console.log("texto que le llega a sebdTextToServer: " + text);
-  const authToken = getAuthToken();
-  hideResponseText();
-  showLoadingMessageEnv();
-  showTypingIndicator();
-  const conversationId = localStorage.getItem("conversation_id") || null;
-
-  const data = {
-    question: text,
-    conversation_id: conversationId,
-    actions: false,
-    lang: "es",
-    data: null,
-    raw_text: "Soy el cuerpo del texto",
-    meta: {
-      doclang: "es",
-      generativeClassification: {
-        doctype: "Contrato encargo tratamiento (ES)",
-        subject_code: "privacidad",
-        code: "cont_encargo",
-        subject: "PRIVACIDAD"
-      },
-      doccountry: "España",
-      kind: "conversation",
-      path: ""
-    },
-    country: "España",
-    expertMode: false
-  };
-  console.log("Payload enviado:", JSON.stringify(data));
-  $.ajax({
-    // url: "http://localhost:3001/api/text",
-    // url: "https://servidor-complemento.onrender.com/api/text",
-    url: "https://miadev.miaintelligence.com:444/api/callDocChat",
-    type: "POST",
-    contentType: "application/json",
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-    data: JSON.stringify(data),
-    success: function (response) {
-      hideLoadingMessageEnv();
-      hideTypingIndicator();
-      // displayResponseText(response);
-      console.log("Payload resivido:", JSON.stringify(response));
-      displayResponseChat(response);
-    },
-    error: function (xhr, status, error) {
-      hideLoadingMessageEnv();
-      hideTypingIndicator();
-      let errorMessage;
-      if (xhr.status === 401) {
-        errorMessage = xhr.responseJSON.message;
-        // showAuthTokenDialog();
-      } else {
-        errorMessage = "Error del servidor.";
-      }
-      displayResponseText({ message: errorMessage });
-    },
-    complete: function () {
-      hideLoadingMessageEnv();
-    },
-  });
-}
-
-// Función para mostrar la respuesta en el panel
-function displayResponseText(response) {
-  const responseContainer = document.getElementById("response-text");
-  if (response && response.message) {
-    responseContainer.innerText = response.message;
-  } else {
-    responseContainer.innerText = "No response from server.";
-  }
 }
 
 function newChat() {
@@ -518,56 +465,6 @@ function newChat() {
 //     scrollToBottom();
 //   }
 // }
-
-function displayResponseChat(response) {
-  const chatBox = document.getElementById("chat-box");
-  hideTypingIndicator();
-
-  if (typeof response === "string") {
-    try {
-      response = JSON.parse(response);
-    } catch {
-      mostrarMensajeError("Respuesta del servidor no es un JSON válido.");
-      return;
-    }
-  }
-
-  // Verificar si la estructura contiene mensajes
-  if (response && response.data && response.data.messages) {
-    if (response.data.conversation_id) {
-      localStorage.setItem("conversation_id", response.data.conversation_id);
-    }
-    const assistantMessage = response.data.messages.find((message) => message.role === "assistant");
-
-    if (assistantMessage && assistantMessage.content) {
-      // Crear y mostrar el mensaje del asistente en el chat
-      const botMessageElement = document.createElement("div");
-      botMessageElement.classList.add("message", "bot-message");
-      botMessageElement.textContent = assistantMessage.content;
-      chatBox.appendChild(botMessageElement);
-      scrollToBottom();
-    } else {
-      mostrarMensajeError("No hay contenido en el mensaje del asistente.");
-    }
-  } else {
-    mostrarMensajeError("No response from server.");
-  }
-}
-
-function mostrarMensajeError(texto) {
-  const chatBox = document.getElementById("chat-box");
-  const botMessageElement = document.createElement("div");
-  botMessageElement.classList.add("message", "bot-message");
-  botMessageElement.textContent = texto;
-  chatBox.appendChild(botMessageElement);
-  scrollToBottom();
-}
-
-// Función para desplazar el chat hacia el último mensaje
-function scrollToBottom() {
-  const chatBox = document.getElementById("chat-box");
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
 
 function handleSendAllText() {
   Word.run(async (context) => {
@@ -612,68 +509,6 @@ function showTypingIndicator() {
   chatBox.appendChild(typingIndicator);
 
   scrollToBottom();
-}
-
-// Función para ocultar el indicador de "escribiendo"
-function hideTypingIndicator() {
-  const typingIndicator = document.querySelector(".typing-indicator");
-  if (typingIndicator) {
-    typingIndicator.remove();
-  }
-}
-
-// Función para enviar el texto desde el input
-function sendInputText() {
-  const input = document.getElementById("chat-input");
-  // const authToken = localStorage.getItem("authTokenMia");
-
-  const userMessage = input.value.trim();
-
-  if (userMessage) {
-    // Mostrar el mensaje del usuario en el chat
-    const chatBox = document.getElementById("chat-box");
-
-    // Formatear el mensaje del usuario y agregarlo al chat
-    const userMessageElement = document.createElement("div");
-    userMessageElement.classList.add("message", "user-message");
-    userMessageElement.textContent = userMessage;
-    chatBox.appendChild(userMessageElement);
-
-    input.value = "";
-
-    scrollToBottom();
-
-    sendTextToServer(userMessage);
-  }
-}
-
-// sección Revisa
-// Función para enviar la solicitud y procesar la respuesta
-function sendReviewRequest(authToken, text) {
-  // Mostrar el indicador de carga mientras se espera la respuesta
-  showLoadingRevisa();
-  $.ajax({
-    url: "https://servidor-complemento.onrender.com/api/revisa",
-    type: "POST",
-    contentType: "application/json",
-    data: JSON.stringify({ authToken: authToken, text: text }),
-    success: function (response) {
-      hideLoadingRevisa(); // Ocultar el indicador de carga
-      // Pintar la respuesta en el div res-revisar
-      jsonResponseTextRevisa(response);
-    },
-    error: function (xhr, status, error) {
-      hideLoadingRevisa(); // Ocultar el indicador de carga en caso de error
-      let errorMessage = "Error del servidor.";
-      if (xhr.status === 401) {
-        errorMessage = xhr.responseJSON.message;
-      }
-      displayResponseText({ message: errorMessage });
-    },
-    complete: function () {
-      hideLoadingRevisa();
-    },
-  });
 }
 
 // Mueve la declaración de la función fuera del cuerpo principal de la función jsonResponseTextRevisa
@@ -885,8 +720,16 @@ function classifyGenerative(doc) {
       hideLoadingMessageEnv();
       hideTypingIndicator();
       let errorMessage;
+      console.log("Estado del error: ", status);
+      console.log("Estado del error: ", error);
       if (xhr.status === 401) {
         errorMessage = xhr.responseJSON.message;
+        // console.log("entro");
+        // const responseDocType = document.getElementById("response-session");
+        // unauthorizedToken();
+        // hideClassifyDocument();
+        // responseDocType.innerText = "La sesión ha caducado.";
+        // showResponseSession();
       } else {
         errorMessage = "Error del servidor.";
       }
@@ -965,7 +808,7 @@ function removeDocTypeText() {
   }
 }
 // #####################################################################################
-//                             Campos opcion clasificacion automatica
+//                       Inicio Campos opcion clasificacion automatica
 // #####################################################################################
 function getGenerativeClassifierConfig() {
   const authToken = getAuthToken();
@@ -997,14 +840,13 @@ function getGenerativeClassifierConfig() {
       console.log("HTTP Status Code:", xhr.status); // Ver el código de estado HTTP
       try {
         // Intenta parsear la respuesta JSON
-        const response = JSON.parse(xhr.responseText);
-        if (response.message === "La sesión ha caducado. Por favor, vuelva a autenticarse.") {
-          console.log("entro");
-          const responseDocType = document.getElementById("response-session");
-          // handleDeletToken();
-          hideClassifyDocument();
-          responseDocType.innerText = "La sesión ha caducado.";
-          showResponseSession();
+        if (xhr.status === 401) {
+          console.log("entro unauthorizedToken");
+          // const responseDocType = document.getElementById("response-session");
+          // unauthorizedToken();
+          // hideClassifyDocument();
+          // responseDocType.innerText = "La sesión ha caducado.";
+          // showResponseSession();
         }
       } catch (e) {
         console.log("Error al parsear JSON de la respuesta:", e);
@@ -1111,5 +953,244 @@ function initializeSelectsFromData(data) {
     newOption.text = "sin clasificar";
     tipoDocSelect.appendChild(newOption);
     tipoDocSelect.selectedIndex = tipoDocSelect.options.length - 1;
+  }
+}
+// #####################################################################################
+//                           Fin Campos opcion clasificacion automatica
+// #####################################################################################
+
+// #####################################################################################
+//                             Inicio Prestaña del Chat
+// #####################################################################################
+// Función para enviar el texto desde el input
+function sendInputText() {
+  const input = document.getElementById("chat-input");
+  // const authToken = localStorage.getItem("authTokenMia");
+
+  const userMessage = input.value.trim();
+
+  if (userMessage) {
+    // Mostrar el mensaje del usuario en el chat
+    const chatBox = document.getElementById("chat-box");
+
+    // Formatear el mensaje del usuario y agregarlo al chat
+    const userMessageElement = document.createElement("div");
+    userMessageElement.classList.add("message", "user-message");
+    userMessageElement.textContent = userMessage;
+    chatBox.appendChild(userMessageElement);
+
+    input.value = "";
+
+    scrollToBottom();
+
+    sendTextToServer(userMessage);
+  }
+}
+
+// Función para enviar el texto del chat a la API.
+function sendTextToServer(text) {
+  console.log("texto que le llega a sendTextToServer: " + text);
+
+  getDocumentText()
+    .then((documentText) => {
+      const authToken = getAuthToken();
+      hideResponseText();
+      showLoadingMessageEnv();
+      showTypingIndicator();
+      const conversationId = localStorage.getItem("conversation_id") || null;
+
+      const data = {
+        question: text,
+        conversation_id: conversationId,
+        actions: false,
+        lang: "es",
+        data: null,
+        raw_text: documentText,
+        meta: {
+          doclang: "es",
+          generativeClassification: {
+            doctype: "Contrato encargo tratamiento (ES)",
+            subject_code: "privacidad",
+            code: "cont_encargo",
+            subject: "PRIVACIDAD",
+          },
+          doccountry: "España",
+          kind: "conversation",
+          path: "",
+        },
+        country: "España",
+        expertMode: false,
+      };
+
+      console.log("Payload enviado:", JSON.stringify(data));
+
+      $.ajax({
+        url: "https://miadev.miaintelligence.com:444/api/callDocChat",
+        type: "POST",
+        contentType: "application/json",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+        data: JSON.stringify(data),
+        success: function (response) {
+          hideLoadingMessageEnv();
+          hideTypingIndicator();
+          console.log("Payload recibido:", JSON.stringify(response));
+          displayResponseChat(response);
+        },
+        error: function (xhr, status, error) {
+          hideLoadingMessageEnv();
+          hideTypingIndicator();
+          let errorMessage;
+          console.log("Estado del error: ", status); //Lo pongo para qeu no me salte el error de ESLint
+          console.log("Estado del error: ", error); //Lo pongo para qeu no me salte el error de ESLint
+          if (xhr.status === 401) {
+            displayResponseChat(
+              JSON.stringify({
+                data: {
+                  messages: [{ role: "assistant", content: "La sesión ha caducado." }],
+                  conversation_id: "session_expired",
+                },
+              })
+            );
+            setTimeout(function () {
+              window.location.reload();
+            }, 3000);
+          } else {
+            errorMessage = "Error del servidor.";
+          }
+          displayResponseText({ message: errorMessage });
+        },
+        complete: function () {
+          hideLoadingMessageEnv();
+        },
+      });
+    })
+    .catch((error) => {
+      // En caso de que ocurra un error al obtener el texto del documento
+      console.error(error);
+      displayResponseText({ message: error });
+    });
+}
+
+//Obtiene el documento de las paginas del Word
+function getDocumentText() {
+  return new Promise((resolve, reject) => {
+    Word.run(async (context) => {
+      try {
+        const body = context.document.body;
+        body.load("text");
+        await context.sync();
+        resolve(body.text);
+      } catch (error) {
+        reject("Error al obtener el texto del documento: " + error);
+      }
+    });
+  });
+}
+
+//Funcion paar mostrar las respuestas en el Chat
+function displayResponseChat(response) {
+  const chatBox = document.getElementById("chat-box");
+  hideTypingIndicator();
+
+  if (typeof response === "string") {
+    try {
+      response = JSON.parse(response);
+    } catch {
+      mostrarMensajeError("Respuesta del servidor no es un JSON válido.");
+      return;
+    }
+  }
+
+  if (response && response.data && response.data.messages) {
+    if (response.data.conversation_id) {
+      localStorage.setItem("conversation_id", response.data.conversation_id);
+    }
+    const assistantMessage = response.data.messages.reverse().find((message) => message.role === "assistant");
+
+    if (assistantMessage && assistantMessage.content) {
+      // Crear y mostrar el mensaje del asistente en el chat
+      const botMessageElement = document.createElement("div");
+      botMessageElement.classList.add("message", "bot-message");
+      botMessageElement.textContent = assistantMessage.content;
+      chatBox.appendChild(botMessageElement);
+      scrollToBottom();
+    } else {
+      mostrarMensajeError("No hay contenido en el mensaje del asistente.");
+    }
+  } else {
+    mostrarMensajeError("No response from server.");
+  }
+}
+
+// Función para ocultar el indicador de "escribiendo"
+function hideTypingIndicator() {
+  const typingIndicator = document.querySelector(".typing-indicator");
+  if (typingIndicator) {
+    typingIndicator.remove();
+  }
+}
+
+//Funcion para mostrar en el chat si hay una respuesta de error
+function mostrarMensajeError(texto) {
+  const chatBox = document.getElementById("chat-box");
+  const botMessageElement = document.createElement("div");
+  botMessageElement.classList.add("message", "bot-message");
+  botMessageElement.textContent = texto;
+  chatBox.appendChild(botMessageElement);
+  scrollToBottom();
+}
+
+// Función para desplazar el chat hacia el último mensaje
+function scrollToBottom() {
+  const chatBox = document.getElementById("chat-box");
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+// #####################################################################################
+//                           Fin Prestaña del Chat
+// #####################################################################################
+
+// #####################################################################################
+//                             Inicio Prestaña de Revisa
+// #####################################################################################
+
+// Función para enviar la solicitud y procesar la respuesta
+function sendReviewRequest(authToken, text) {
+  // Mostrar el indicador de carga mientras se espera la respuesta
+  showLoadingRevisa();
+  $.ajax({
+    url: "https://servidor-complemento.onrender.com/api/revisa",
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({ authToken: authToken, text: text }),
+    success: function (response) {
+      hideLoadingRevisa(); // Ocultar el indicador de carga
+      // Pintar la respuesta en el div res-revisar
+      jsonResponseTextRevisa(response);
+    },
+    error: function (xhr, status, error) {
+      hideLoadingRevisa(); // Ocultar el indicador de carga en caso de error
+      let errorMessage = "Error del servidor.";
+      console.log("Estado del error: ", status);
+      console.log("Estado del error: ", error);
+      if (xhr.status === 401) {
+        errorMessage = xhr.responseJSON.message;
+      }
+      displayResponseText({ message: errorMessage });
+    },
+    complete: function () {
+      hideLoadingRevisa();
+    },
+  });
+}
+
+// Función para mostrar la respuesta en el panel
+function displayResponseText(response) {
+  const responseContainer = document.getElementById("response-text");
+  if (response && response.message) {
+    responseContainer.innerText = response.message;
+  } else {
+    responseContainer.innerText = "No response from server.";
   }
 }

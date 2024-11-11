@@ -58,7 +58,7 @@
       <!-- -------------------------Fin Index Token--------------------------- -->
       <div id="loading-index" class="loader"></div>
       <!-- -------------------------Inicio pestañas--------------------------- -->
-      <section id="classify-document" class="classify-document no-select display-none">
+      <section id="classify-document" class="classify-document no-select" style="display: none;">
         <div class="classify-document-box">
           <div id="classify-document-container" class="classify-document-container">
             <span id="doctype"></span>
@@ -88,8 +88,9 @@
                 </div>
               </div>
               <div>
-                <div id="close-document-container" class="container-btn">
-                  <span class="btn-cerrar btn-green no-select">Cerrar</span>
+                <div class="container-btn">
+                  <span id="aplicar" class="btn-clasif-auto btn-aplicar btn-green no-select">Aplicar</span>
+                  <span id="close-document-container" class=" btn-clasif-auto btn-cerrar btn-grey no-select">Cerrar</span>
                 </div>
               </div>
             </section>
@@ -120,12 +121,12 @@
           <div class="box-token">
             <label for="emailUser" class="no-select">Correo electrónico </label>
             <div class="box-input">
-              <input type="text" id="emailUser" class="input-login" />
+              <input type="email" id="emailUser" class="input-login" />
               <div id="error-message-email" style="color: red; display: none"></div>
             </div>
             <label for="passwordUser" class="no-select">Contraseña</label>
             <div class="box-input">
-              <input type="text" id="passwordUser" class="input-login" />
+              <input type="password" id="passwordUser" class="input-login" />
               <div id="error-message-password" style="color: red; display: none"></div>
             </div>
           </div>
@@ -213,17 +214,14 @@
         <!-- -----------------Inicio pestaña Extrae----------------- -->
         <div id="tab-3" style="display: none">
           <div class="envios-container">
-            <div role="button" id="enviar-texto" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl mb">
-              <span class="ms-Button-label">Enviar</span>
-            </div>
             <div class="box-response-text">
               <div id="loadingMessageEnv" class="loader" style="display: none"></div>
               <div id="response-text"></div>
             </div>
           </div>
           <div class="box-delete-token">
-            <label for="authTokenInput">Eliminar Token</label>
-            <div class="box-input">
+            <span>Eliminar Token</span>
+            <div class="ms-welcome__action ms-Button ms-Button--hero mb btn-revisa">
               <button id="eliminar-token">Eliminar</button>
             </div>
             <span id="response-delete-token" style="color: rgb(0, 189, 25)"></span>
