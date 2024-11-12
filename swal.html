@@ -19,7 +19,7 @@
     Office.onReady(function (info) {
       if (info.host === Office.HostType.Word) {
         // Ahora puedes usar Office.context.ui
-        Office.context.ui.addHandlerAsync(
+        Office.context.ui.iten.addHandlerAsync(
           Office.EventType.DialogMessageReceived, 
           function (args) {
             var message = args.message;
