@@ -9,11 +9,14 @@
   <h2 id="dialogTitle">Cargando...</h2>
 
   <script>
-    // Escuchar el mensaje del complemento
-    window.addEventListener("message", function(event) {
-      console.log("Mensaje recibido:", event.data);
-      document.getElementById("dialogTitle").innerText = event.data;
-    });
+    // Obtener los parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+    const message = params.get('message');
+
+    // Mostrar el mensaje
+    if (message) {
+      document.getElementById("dialogTitle").innerText = message;
+    }
   </script>
 </body>
 </html>
