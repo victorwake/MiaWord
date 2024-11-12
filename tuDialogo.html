@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo de Office 2</title>
+  <title>Diálogo de Office 3</title>
 </head>
 <body>
   <h2 id="message">Esperando mensaje del complemento...</h2>
@@ -12,6 +12,22 @@
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
     console.log("Office.js cargado correctamente");
+
+    // Utilizamos un MutationObserver para monitorear cambios en el DOM
+    const observer = new MutationObserver((mutationsList, observer) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          console.log('El DOM ha sido actualizado:', mutation);
+        }
+      }
+    });
+
+    // Configurar el observer para observar cambios en el #message
+    const messageElement = document.getElementById('message');
+    if (messageElement) {
+      observer.observe(messageElement, { childList: true, subtree: true });
+      console.log('Observador del DOM iniciado');
+    }
 
     Office.onReady(function (info) {
       console.log("Office.onReady ejecutado:", info);
@@ -24,8 +40,13 @@
 
           if (args && args.message) {
             // Actualizar el contenido de la página con el mensaje recibido
-            document.getElementById("message").textContent = "Mensaje del complemento: " + args.message;
-            console.log("Mensaje recibido en el diálogo:", args.message);
+            const messageElement = document.getElementById("message");
+            if (messageElement) {
+              messageElement.textContent = "Mensaje del complemento: " + args.message;
+              console.log("Mensaje recibido en el diálogo:", args.message);
+            } else {
+              console.warn("Elemento de mensaje no encontrado");
+            }
           } else {
             console.warn("Evento recibido, pero sin mensaje:", args);
           }
@@ -40,12 +61,6 @@
         console.warn("Host no compatible:", info.host);
       }
     });
-
-    // Registrar si se pierde el evento
-    window.addEventListener("message", (event) => {
-      console.log("Mensaje recibido a través de 'message' estándar:", event.data);
-    });
   </script>
 </body>
 </html>
-
