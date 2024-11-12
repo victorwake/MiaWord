@@ -11,11 +11,34 @@
   <!-- Asegúrate de cargar Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
-    Office.onReady(function () {
-      // Escucha mensajes enviados desde el complemento
-      Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, (args) => {
-        document.getElementById("message").textContent = "Mensaje del complemento: " + args.message;
-      });
+    // Agregar verificación de carga de Office.js
+    console.log("Office.js cargado correctamente");
+
+    Office.onReady(function (info) {
+      console.log("Office.onReady ejecutado:", info);
+      if (info.host === Office.HostType.Word || info.host === Office.HostType.Excel || info.host === Office.HostType.PowerPoint) {
+        console.log("Host correcto:", info.host);
+
+        // Añadir verificación de la función de comunicación
+        Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, (args) => {
+          console.log("Evento DialogParentMessageReceived capturado");
+
+          if (args && args.message) {
+            document.getElementById("message").textContent = "Mensaje del complemento: " + args.message;
+            console.log("Mensaje recibido en el diálogo:", args.message);
+          } else {
+            console.warn("Evento recibido, pero sin mensaje:", args);
+          }
+        }, (result) => {
+          if (result.status === Office.AsyncResultStatus.Failed) {
+            console.error("Error al añadir handler de mensaje:", result.error.message);
+          } else {
+            console.log("Handler de mensaje añadido correctamente");
+          }
+        });
+      } else {
+        console.warn("Host no compatible:", info.host);
+      }
     });
   </script>
 </body>
