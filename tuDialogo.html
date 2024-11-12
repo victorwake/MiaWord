@@ -11,7 +11,7 @@
   <!-- Asegúrate de cargar Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
-    // Agregar verificación de carga de Office.js
+    // Confirmar que Office.js está listo
     console.log("Office.js cargado correctamente");
 
     Office.onReady(function (info) {
@@ -19,7 +19,7 @@
       if (info.host === Office.HostType.Word || info.host === Office.HostType.Excel || info.host === Office.HostType.PowerPoint) {
         console.log("Host correcto:", info.host);
 
-        // Añadir verificación de la función de comunicación
+        // Añadir handler para recibir mensajes del complemento
         Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, (args) => {
           console.log("Evento DialogParentMessageReceived capturado");
 
@@ -43,3 +43,4 @@
   </script>
 </body>
 </html>
+
