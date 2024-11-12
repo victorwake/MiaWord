@@ -1,4 +1,22 @@
-Office.onReady(function (info) {
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diálogo</title>
+</head>
+<body>
+  <div id="dialogContent">
+    <h2 id="dialogTitle">Cargando...</h2>
+    <div id="proposalsContainer">
+      <!-- Las propuestas se cargarán aquí -->
+    </div>
+  </div>
+
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <script>
+    // Asegúrate de que Office.js esté completamente cargado antes de usarlo
+   Office.onReady(function (info) {
   if (info.host === Office.HostType.Word) {
     // Asegúrate de que los parámetros sean válidos
     Office.context.ui.addHandlerAsync(
@@ -30,6 +48,10 @@ Office.onReady(function (info) {
     );
   }
 });
+
+  </script>
+</body>
+</html>
 
 
 
