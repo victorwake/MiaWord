@@ -15,21 +15,28 @@
 
   <!-- Asegúrate de cargar Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
- <script>
-  Office.onReady(function (info) {
-    if (info.host === Office.HostType.Word) {
-      // No necesitamos addHandlerAsync aquí
+  <script>
+    Office.onReady(function (info) {
+      if (info.host === Office.HostType.Word) {
+        // Escuchar el mensaje del complemento directamente
+        window.addEventListener('message', function(event) {
+          if (event.data) {
+            console.log('Mensaje recibido del complemento:', event.data);
+            // Procesar el mensaje recibido
+            document.getElementById("dialogTitle").innerText = event.data;
+          }
+        });
 
-      // En su lugar, puedes escuchar mensajes desde el complemento directamente
-      window.addEventListener('message', (event) => {
-        if (event.data) {
-          console.log('Mensaje recibido del complemento:', event.data);
-          // Procesar el mensaje recibido
-          // ...
+        // Si el diálogo necesita responder al complemento
+        function sendMessageBack() {
+          var response = "Este es un mensaje de respuesta desde el diálogo.";
+          Office.context.ui.messageParent(response);
         }
-      });
-    }
-  });
-</script>
+
+        // Llama a sendMessageBack cuando sea necesario (opcional)
+        // sendMessageBack();
+      }
+    });
+  </script>
 </body>
 </html>
