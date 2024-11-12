@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo de Office</title>
+  <title>Diálogo de Office 1</title>
 </head>
 <body>
   <h2 id="message">Esperando mensaje del complemento...</h2>
@@ -11,7 +11,6 @@
   <!-- Asegúrate de cargar Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
-    // Confirmar que Office.js está listo
     console.log("Office.js cargado correctamente");
 
     Office.onReady(function (info) {
@@ -19,7 +18,7 @@
       if (info.host === Office.HostType.Word || info.host === Office.HostType.Excel || info.host === Office.HostType.PowerPoint) {
         console.log("Host correcto:", info.host);
 
-        // Añadir handler para recibir mensajes del complemento
+        // Añadir handler para recibir mensajes
         Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, (args) => {
           console.log("Evento DialogParentMessageReceived capturado");
 
@@ -39,6 +38,11 @@
       } else {
         console.warn("Host no compatible:", info.host);
       }
+    });
+
+    // Registrar si se pierde el evento
+    window.addEventListener("message", (event) => {
+      console.log("Mensaje recibido a través de 'message' estándar:", event.data);
     });
   </script>
 </body>
