@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo de Office 4</title>
+  <title>Diálogo de Office 5</title>
 </head>
 <body>
   <h2 id="message">Esperando mensaje del complemento...</h2>
@@ -24,10 +24,10 @@
 
     // Configurar el observer para observar cambios en el #message
     const messageElement = document.getElementById('message');
-    if (messageElement) {
-      observer.observe(messageElement, { childList: true, subtree: true });
+    const messageParent = messageElement.parentNode;
+     observer.observe(messageParent, { childList: true, subtree: true });
       console.log('Observador del DOM iniciado');
-    }
+    
 
     Office.onReady(function (info) {
       console.log("Office.onReady ejecutado:", info);
@@ -60,6 +60,9 @@
       } else {
         console.warn("Host no compatible:", info.host);
       }
+      requestAnimationFrame(() => {
+        messageElement.textContent = "Mensaje del complemento: " + args.message;
+    });
     });
   </script>
 </body>
