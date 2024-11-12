@@ -6,25 +6,17 @@
   <title>Diálogo de Office</title>
 </head>
 <body>
-  <h2>Este es el diálogo abierto desde el complemento</h2>
-  <p id="message">Esperando mensaje del complemento...</p>
-  <button onclick="enviarMensajeAlComplemento()">Enviar mensaje al complemento</button>
+  <h2 id="message">Esperando mensaje del complemento...</h2>
 
+  <!-- Asegúrate de cargar Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
     Office.onReady(function () {
-      // Función para recibir mensajes del complemento
-      window.addEventListener("message", (event) => {
-        if (event.data) {
-          document.getElementById("message").textContent = "Mensaje del complemento: " + event.data;
-        }
+      // Escucha mensajes enviados desde el complemento
+      Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, (args) => {
+        document.getElementById("message").textContent = "Mensaje del complemento: " + args.message;
       });
     });
-
-    function enviarMensajeAlComplemento() {
-      // Enviar un mensaje al complemento
-      Office.context.ui.messageParent("Hola desde el diálogo");
-    }
   </script>
 </body>
 </html>
