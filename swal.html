@@ -13,10 +13,10 @@
     </div>
   </div>
 
+  <!-- Asegúrate de cargar Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
-    // Asegúrate de que Office.js esté completamente cargado antes de usarlo
-   Office.onReady(function (info) {
+    Office.onReady(function (info) {
       if (info.host === Office.HostType.Word) {
         // Ahora puedes usar Office.context.ui
         Office.context.ui.addHandlerAsync(
@@ -24,12 +24,11 @@
           function (args) {
             var message = args.message;
             console.log("Mensaje recibido del diálogo:", message);
-
+            
             // Cambiar el título del diálogo con el mensaje recibido
             document.getElementById("dialogTitle").innerText = message;
           },
           function (asyncResult) {
-            // Este es el callback para manejar el resultado de la operación
             if (asyncResult.status === Office.AsyncResultStatus.Failed) {
               console.error("Error al agregar el manejador de eventos:", asyncResult.error.message);
             }
@@ -37,11 +36,6 @@
         );
       }
     });
-
   </script>
 </body>
 </html>
-
-
-
-
