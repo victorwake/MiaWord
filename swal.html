@@ -1,52 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo</title>
-</head>
-<body>
-  <div id="dialogContent">
-    <h2 id="dialogTitle">Cargando...</h2>
-    <div id="proposalsContainer">
-      <!-- Las propuestas se cargarán aquí -->
-    </div>
-  </div>
+Office.onReady(function (info) {
+  if (info.host === Office.HostType.Word) {
+    // Asegúrate de que los parámetros sean válidos
+    Office.context.ui.addHandlerAsync(
+      Office.EventType.DialogMessageReceived,
+      function (args) {
+        var message = args.message;
+        console.log("Mensaje recibido del diálogo:", message);
 
-  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <script>
-    // Asegúrate de que Office.js esté completamente cargado antes de usarlo
-    Office.onReady(function (info) {
-      if (info.host === Office.HostType.Word) {
-        // Ahora puedes usar Office.context.ui
-        Office.context.ui.iten.addHandlerAsync(
-          Office.EventType.DialogMessageReceived, 
-          function (args) {
-            var message = args.message;
-            console.log("Mensaje recibido del diálogo:", message);
+        // Procesar el mensaje y actualizar el contenido dinámico
+        if (message.title && message.proposals) {
+          document.getElementById("dialogTitle").innerText = message.title;
 
-            // Procesa el mensaje y actualiza el contenido dinámico
-            if (message.title && message.proposals) {
-              // Cambia el título
-              document.getElementById("dialogTitle").innerText = message.title;
+          var proposalsContainer = document.getElementById("proposalsContainer");
+          proposalsContainer.innerHTML = '';
 
-              // Rellena las propuestas
-              var proposalsContainer = document.getElementById("proposalsContainer");
-              proposalsContainer.innerHTML = ''; // Limpiar contenido anterior
-
-              message.proposals.forEach(function (proposal) {
-                var div = document.createElement('div');
-                div.innerHTML = `<b>Propuesta ${proposal.id}:</b> ${proposal.text}`;
-                proposalsContainer.appendChild(div);
-              });
-            }
-          }
-        );
+          message.proposals.forEach(function (proposal) {
+            var div = document.createElement('div');
+            div.innerHTML = `<b>Propuesta ${proposal.id}:</b> ${proposal.text}`;
+            proposalsContainer.appendChild(div);
+          });
+        }
+      },
+      function (asyncResult) {
+        // Este es el callback para manejar el resultado de la operación
+        if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+          console.error("Error al agregar el manejador de eventos:", asyncResult.error.message);
+        }
       }
-    });
-  </script>
-</body>
-</html>
+    );
+  }
+});
+
 
 
 
