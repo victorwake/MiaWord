@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo de Office 1</title>
+  <title>Diálogo de Office 2</title>
 </head>
 <body>
   <h2 id="message">Esperando mensaje del complemento...</h2>
@@ -23,6 +23,7 @@
           console.log("Evento DialogParentMessageReceived capturado");
 
           if (args && args.message) {
+            // Actualizar el contenido de la página con el mensaje recibido
             document.getElementById("message").textContent = "Mensaje del complemento: " + args.message;
             console.log("Mensaje recibido en el diálogo:", args.message);
           } else {
