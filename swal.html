@@ -40,11 +40,6 @@
                 proposalsContainer.appendChild(div);
               });
             }
-          }, 
-          function (asyncResult) {
-            if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-              console.error("Error al agregar el manejador de eventos:", asyncResult.error.message);
-            }
           }
         );
       }
@@ -52,5 +47,6 @@
   </script>
 </body>
 </html>
+
 
 
