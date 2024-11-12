@@ -3,39 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo</title>
+  <title>Ventana Emergente</title>
 </head>
 <body>
-  <div id="dialogContent">
-    <h2 id="dialogTitle">Cargando...</h2>
-    <div id="proposalsContainer">
-      <!-- Las propuestas se cargarán aquí -->
-    </div>
-  </div>
+  <h2 id="dialogTitle">Cargando...</h2>
 
-  <!-- Asegúrate de cargar Office.js -->
-  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
-    Office.onReady(function (info) {
-      if (info.host === Office.HostType.Word) {
-        // Escuchar el mensaje del complemento directamente
-        window.addEventListener('message', function(event) {
-          if (event.data) {
-            console.log('Mensaje recibido del complemento:', event.data);
-            // Procesar el mensaje recibido
-            document.getElementById("dialogTitle").innerText = event.data;
-          }
-        });
-
-        // Si el diálogo necesita responder al complemento
-        function sendMessageBack() {
-          var response = "Este es un mensaje de respuesta desde el diálogo.";
-          Office.context.ui.messageParent(response);
-        }
-
-        // Llama a sendMessageBack cuando sea necesario (opcional)
-        // sendMessageBack();
-      }
+    // Escuchar el mensaje del complemento
+    window.addEventListener("message", function(event) {
+      console.log("Mensaje recibido:", event.data);
+      document.getElementById("dialogTitle").innerText = event.data;
     });
   </script>
 </body>
