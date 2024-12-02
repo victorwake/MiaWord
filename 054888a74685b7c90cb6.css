@@ -1097,7 +1097,7 @@ select:focus {
 .select {
   border-radius: 5px;
   position: relative;
-  height: 28px;
+  min-height: 28px;
   background: #EDEDED;
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
   overflow: hidden; /* Evita que elementos adicionales salgan del contenedor */
@@ -1600,6 +1600,10 @@ cursor: pointer;
   width: 17px !important;
   margin-right: 3px;
 }
+
+
+
+
 
 
 
