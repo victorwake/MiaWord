@@ -6,7 +6,8 @@
   <title>Ventana Emergente</title>
 </head>
 <body>
-  <h2 id="dialogTitle">Cargando...</h2>
+  <h2 id="dialogTitle">Alternativas</h2>
+  <ul id="alternativesList"></ul> <!-- Lista para mostrar las alternativas -->
 
   <script>
     // Enviar confirmación al complemento
@@ -15,7 +16,25 @@
     // Escuchar el mensaje del complemento
     window.addEventListener("message", function(event) {
       console.log("Mensaje recibido:", event.data);
-      document.getElementById("dialogTitle").innerText = event.data;
+
+      // Obtener el contenedor donde mostrar las alternativas
+      const alternativesList = document.getElementById("alternativesList");
+
+      // Verificar si el mensaje contiene un array de alternativas
+      if (event.data && Array.isArray(event.data.alternatives)) {
+        // Limpiar la lista (por si acaso)
+        alternativesList.innerHTML = "";
+
+        // Iterar sobre las alternativas y añadirlas como elementos <li>
+        event.data.alternatives.forEach((alternative) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = alternative; // Asignar el texto de la alternativa
+          alternativesList.appendChild(listItem);
+        });
+      } else {
+        // Si no es un array, mostrar un mensaje de error o el contenido directamente
+        alternativesList.innerHTML = "<li>No se encontraron alternativas válidas.</li>";
+      }
     });
   </script>
 </body>
