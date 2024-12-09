@@ -847,21 +847,6 @@ select:focus {
     padding-bottom: 30px;
 }
 
-.btn-revisa{
-  border-radius: 5px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 35px;
-  padding: 7px;
-  color: #fcfcfc;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
-  transition: background-color 0.3s ease; 
-}
-
 .btn-clasif-auto{
   border-radius: 5px;
   display: inline-flex;
@@ -889,14 +874,6 @@ select:focus {
 
 .btn-cerrar:hover{
   background-color: #cecece !important;
-}
-
-.btn-green{
-  background: #5E9D56;
-}
-
-.btn-grey{
-  background: #E2E2E2;
 }
 
 .icon-white{
@@ -1590,7 +1567,6 @@ cursor: pointer;
   color: #fcfcfc;
   font-size: 1rem;
   font-weight: 600;
-  cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
   transition: background-color 0.3s ease; 
 }
 
@@ -1602,9 +1578,26 @@ cursor: pointer;
   background: #E2E2E2;
 }
 
+.correct-act{
+  background: #c0c0c0;
+}
+
 .icon-white{
   color: #fcfcfc;
   font-size: 1.4rem;
+}
+.rotate-icon-refresh{
+  display: inline-block; /* Asegura que el ícono sea tratable como bloque */
+  animation: rotateIcon 2s linear infinite; /* Aplica la animación */
+}
+
+@keyframes rotateIcon {
+    from {
+        transform: rotate(0deg); /* Inicia sin rotación */
+    }
+    to {
+        transform: rotate(360deg); /* Completa una vuelta */
+    }
 }
 
 .cursor-pointer{
@@ -1778,3 +1771,18 @@ body::-webkit-scrollbar-thumb {
   line-height: 16px;
 }
 
+
+
+
+
+.text-red {
+  color: #f14b47 !important;
+  font-weight: 600 !important;
+  line-height: 1.5rem;
+}
+
+.text-green{
+  color: #5E9D56 !important;
+  font-weight: 600 !important;
+  line-height: 1.5rem;
+}
