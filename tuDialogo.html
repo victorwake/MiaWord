@@ -25,24 +25,28 @@
     // Configurar el observer para observar cambios en el #message
     const messageElement = document.getElementById('message');
     const messageParent = messageElement.parentNode;
-     observer.observe(messageParent, { childList: true, subtree: true });
-      console.log('Observador del DOM iniciado');
+    observer.observe(messageParent, { childList: true, subtree: true });
+    console.log('Observador del DOM iniciado');
     
-
     Office.onReady(function (info) {
       console.log("Office.onReady ejecutado:", info);
       if (info.host === Office.HostType.Word || info.host === Office.HostType.Excel || info.host === Office.HostType.PowerPoint) {
         console.log("Host correcto:", info.host);
 
         // Añadir handler para recibir mensajes
-        Office.context.ui.addHandlerAsync(Office.EventType.DialogParentMessageReceived, (args) => {
-          console.log("Evento DialogParentMessageReceived capturado");
+        Office.context.ui.addHandlerAsync(Office.EventType.DialogMessageReceived, (args) => {
+          console.log("Evento DialogMessageReceived capturado");
 
           if (args && args.message) {
             // Actualizar el contenido de la página con el mensaje recibido
             const messageElement = document.getElementById("message");
             if (messageElement) {
-              messageElement.textContent = "Mensaje del complemento: " + args.message;
+              // Si el mensaje contiene un objeto, como alternatives, conviértelo a texto
+              if (typeof args.message === 'object') {
+                messageElement.textContent = "Mensaje del complemento: " + JSON.stringify(args.message);
+              } else {
+                messageElement.textContent = "Mensaje del complemento: " + args.message;
+              }
               console.log("Mensaje recibido en el diálogo:", args.message);
             } else {
               console.warn("Elemento de mensaje no encontrado");
@@ -60,9 +64,6 @@
       } else {
         console.warn("Host no compatible:", info.host);
       }
-      requestAnimationFrame(() => {
-        messageElement.textContent = "Mensaje del complemento: " + args.message;
-    });
     });
   </script>
 </body>
