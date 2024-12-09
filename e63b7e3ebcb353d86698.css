@@ -847,21 +847,6 @@ select:focus {
     padding-bottom: 30px;
 }
 
-.btn-revisa{
-  border-radius: 5px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 35px;
-  padding: 7px;
-  color: #fcfcfc;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
-  transition: background-color 0.3s ease; 
-}
-
 .btn-clasif-auto{
   border-radius: 5px;
   display: inline-flex;
@@ -889,14 +874,6 @@ select:focus {
 
 .btn-cerrar:hover{
   background-color: #cecece !important;
-}
-
-.btn-green{
-  background: #5E9D56;
-}
-
-.btn-grey{
-  background: #E2E2E2;
 }
 
 .icon-white{
@@ -1358,31 +1335,38 @@ cursor: pointer;
   gap: 10px
 }
 
+/* rojo – evaluado KO icon icon-x*/
 .rec-red {
-  background-color: red;
-}
+	background-color: red;
+  }
 
-.rec-grey {
-  background-color: #CCCCCC;
-}
+  /* gris – sin evaluar icon icon-minus*/
+  .rec-grey {
+	background-color: #CCCCCC;
+  }
 
-.rec-red-box {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  color: white;
-  font-size: 1rem;
-  border-radius: 5px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.rec-red-box span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(-2.5px);
-}
+/* gris – sin evaluar icon icon-check*/
+.rec-green {
+  background-color: #5E9D56;
+  }
+  
+  .rec-box {
+	display: inline-block;
+	width: 20px; /* Ancho del cuadrado */
+	height: 20px; /* Alto del cuadrado */
+	color: white; /* Color del texto */
+	font-size: 1rem; /* Tamaño del texto */
+	border-radius: 5px; /* Bordes redondeados */
+	position: relative; /* Contenedor con posicionamiento relativo */
+	box-sizing: border-box; /* Asegura que el tamaño no se vea afectado por padding o border */
+  }
+  
+  .rec-box span {
+	position: absolute; /* Posicionamiento absoluto del contenido */
+	top: 50%; /* 50% de la altura del contenedor */
+	left: 50%; /* 50% del ancho del contenedor */
+	transform: translate(-50%, -50%) translateY(0); /* Ajuste para centrar en ambas direcciones */
+  }
 
 .right-icons {
   display: flex;
@@ -1391,11 +1375,32 @@ cursor: pointer;
 }
 
 .round-ico{
-  height: 10px;
-  width: 10px;
-  border-radius: 5px;
-  background-color: #FC8E41;
-}
+	height: 10px;
+	width: 10px;
+	border-radius: 5px;
+  margin-right: 3px;
+  }
+
+  /* Importancia: Bajo */
+  .round-ico-green{
+    background-color: rgb(126 206 136);
+    }
+  /* Importancia: Medio */
+  .round-ico-yellow{
+    background-color:rgb(252 201 0);
+  } 
+  /* Importancia: Alto */
+  .round-ico-orange{
+    background-color: rgb(252 142 65);
+  }
+  /* Importancia: Muy Alto */
+  .round-ico-red{
+    background-color: rgb(252, 65, 65);
+  }
+   /* Importancia: "" */
+  .round-ico-default{
+    background-color: rgb(207, 207, 207);
+  }
 
 .span-sub-content {
   font-size: 12px;
@@ -1417,31 +1422,51 @@ cursor: pointer;
 .badge-bg-orange{
   background-color: #FBEADD;
 }
-
 .badge-text-orange{
   color: #EB9352;
   padding: 2px;
   font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-bg-yellow{
+  background-color: rgba(252, 202, 0, 0.080);
+}
+.badge-text-yellow{
+  color: rgb(252 201 0);
+  padding: 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .badge-bg-green{
-  background-color: #eaf8ed;
+  background-color: rgb(219 240 222);
 }
-
 .badge-text-green{
-  color: #5E9D56;
+  color: rgb(126 206 136);
   padding: 2px;
   font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .badge-bg-red{
   background-color: #fbdddd;
 }
-
 .badge-text-red{
   color: #ca3333;
   padding: 2px;
   font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.badge-bg-default{
+  background-color: #fbffff;
+}
+.badge-text-default{
+  color: #080808;
+  padding: 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .badge-bg-ligth-blue{
@@ -1456,18 +1481,79 @@ cursor: pointer;
 }
 
 .round-ico-badge{
-  height: 8px;
-  width: 8px;
-  border-radius: 4px;
-  background-color: #FC8E41;
+	height: 8px;
+	width: 8px;
+	border-radius: 4px;
+  }
+
+  .ico-badge-green{
+    height: 8px;
+    width: 8px;
+    border-radius: 4px;
+    background-color: #56a50d !important;
+    }
+
+    .alert-norm {
+      /* background-color: #F3F4F6; */
+      color: #626262;
+      /* border: 1px solid #DFE2E5; */
+      /* border-radius: 8px; */
+      font-size: 12px;
+      line-height: 16px;
+      width: 100%;
+      padding: 0 16px;
+      margin-top: 4px;
+      /* margin-bottom: 4px; */
+  }
+
+  .danger-alert {
+    background-color: #fff5ed;
+    color: #626262;
+    border: 1px solid #FFEADB;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 16px;
+    width: 100%;
+    padding: 8px 16px;
+    /* margin-top: 4px; */
+    margin-bottom: 4px;
 }
 
-.container-btn{
-  width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
-  text-align: right; /* Esto funciona en la mayoría de los navegadores */
-  overflow: auto;
-  margin-top: 40px;
-  padding-bottom: 30px;
+.hidden {
+  display: none !important;
+}
+
+
+  .alert-icon-flex {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.norm-margin > p {
+  margin: 0 !important;
+}
+
+
+.danger-alert-icon {
+  color: #fb8225;
+  font-size: 28px;
+}
+
+.\!mt-4 {
+  margin-top: 1rem !important;
+}
+
+  .container-btn{
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    text-align: right; /* Esto funciona en la mayoría de los navegadores */
+    overflow: auto;
+    margin-top: 40px;
+    padding-bottom: 30px;
 }
 
 .btn-revisa{
@@ -1481,7 +1567,6 @@ cursor: pointer;
   color: #fcfcfc;
   font-size: 1rem;
   font-weight: 600;
-  cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
   transition: background-color 0.3s ease; 
 }
 
@@ -1493,9 +1578,30 @@ cursor: pointer;
   background: #E2E2E2;
 }
 
+.correct-act{
+  background: #c0c0c0;
+}
+
 .icon-white{
   color: #fcfcfc;
   font-size: 1.4rem;
+}
+.rotate-icon-refresh{
+  display: inline-block; /* Asegura que el ícono sea tratable como bloque */
+  animation: rotateIcon 2s linear infinite; /* Aplica la animación */
+}
+
+@keyframes rotateIcon {
+    from {
+        transform: rotate(0deg); /* Inicia sin rotación */
+    }
+    to {
+        transform: rotate(360deg); /* Completa una vuelta */
+    }
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }
 
 .gestion-propia{
@@ -1622,4 +1728,61 @@ body::-webkit-scrollbar-thumb {
 
 .chat-box::-webkit-scrollbar {
   width: 2px;
+}
+
+.container-spin{
+  font-display: flex;
+  margin:0px auto;
+}
+
+.w-800{
+  font-weight: 9rem !important;
+  margin-right: 3px;
+  color: #5E9D56;
+  font-size: 2rem; /* Aumenta el tamaño proporcional al texto */
+  width: 2rem;     /* Ajusta el ancho */
+  height: 2rem;    /* Ajusta la altura */
+}
+
+.info-alert {
+  background-color: #f1f9ff;
+  color: #626262;
+  border: 1px solid #E2F3FF;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 16px;
+  width: 100%;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-alert-icon {
+  color: #4bb3f8;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.info-alert-text {
+  flex-grow: 1;
+  color: #626262;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+
+
+
+
+.text-red {
+  color: #f14b47 !important;
+  font-weight: 600 !important;
+  line-height: 1.5rem;
+}
+
+.text-green{
+  color: #5E9D56 !important;
+  font-weight: 600 !important;
+  line-height: 1.5rem;
 }
