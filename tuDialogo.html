@@ -11,60 +11,60 @@
   <!-- Asegúrate de cargar Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
-    console.log("Office.js cargado correctamente");
+  <script>
+  Office.onReady(function (info) {
+    console.log("Office.onReady ejecutado:", info);
 
-    // Utilizamos un MutationObserver para monitorear cambios en el DOM
-    const observer = new MutationObserver((mutationsList, observer) => {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-          console.log('El DOM ha sido actualizado:', mutation);
+    if (info.host === Office.HostType.Word || info.host === Office.HostType.Excel || info.host === Office.HostType.PowerPoint) {
+      console.log("Host correcto:", info.host);
+
+      // Añadir handler para recibir mensajes
+      Office.context.ui.addHandlerAsync(Office.EventType.DialogMessageReceived, (args) => {
+        console.log("Mensaje recibido en el diálogo:", args.message);
+
+        if (args && args.message && args.message.alternatives) {
+          const alternatives = args.message.alternatives;
+
+          // Renderizar el contenido recibido en los spans
+          const proposalsContainer = document.getElementById("proposals-container");
+          if (proposalsContainer) {
+            proposalsContainer.innerHTML = ""; // Limpiar contenido previo
+
+            alternatives.forEach((alt, index) => {
+              const proposalHTML = `
+                <div class="flex">
+                  <div style="color: #929292; line-height: 20px; border-radius: 10px; border: 1px solid #DDD; padding: 12px; margin: 15px 5px;">
+                    <div class="flex justify-between gap-12">
+                      <div class="margin-b">
+                        <span class="font-semibold"
+                              style="position: absolute; padding: 3px; margin-top: -26px; background: #fff; color: #41a04d;">
+                          Propuesta ${index + 1}
+                        </span>
+                        <span>
+                          ${alt}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              `;
+              proposalsContainer.insertAdjacentHTML("beforeend", proposalHTML);
+            });
+          }
         }
-      }
-    });
+      }, (result) => {
+        if (result.status === Office.AsyncResultStatus.Failed) {
+          console.error("Error al añadir handler de mensaje:", result.error.message);
+        } else {
+          console.log("Handler de mensaje añadido correctamente");
+        }
+      });
+    } else {
+      console.warn("Host no compatible:", info.host);
+    }
+  });
+</script>
 
-    // Configurar el observer para observar cambios en el #message
-    const messageElement = document.getElementById('message');
-    const messageParent = messageElement.parentNode;
-    observer.observe(messageParent, { childList: true, subtree: true });
-    console.log('Observador del DOM iniciado');
-    
-    Office.onReady(function (info) {
-      console.log("Office.onReady ejecutado:", info);
-      if (info.host === Office.HostType.Word || info.host === Office.HostType.Excel || info.host === Office.HostType.PowerPoint) {
-        console.log("Host correcto:", info.host);
-
-        // Añadir handler para recibir mensajes
-        Office.context.ui.addHandlerAsync(Office.EventType.DialogMessageReceived, (args) => {
-          console.log("Evento DialogMessageReceived capturado");
-
-          if (args && args.message) {
-            // Actualizar el contenido de la página con el mensaje recibido
-            const messageElement = document.getElementById("message");
-            if (messageElement) {
-              // Si el mensaje contiene un objeto, como alternatives, conviértelo a texto
-              if (typeof args.message === 'object') {
-                messageElement.textContent = "Mensaje del complemento: " + JSON.stringify(args.message);
-              } else {
-                messageElement.textContent = "Mensaje del complemento: " + args.message;
-              }
-              console.log("Mensaje recibido en el diálogo:", args.message);
-            } else {
-              console.warn("Elemento de mensaje no encontrado");
-            }
-          } else {
-            console.warn("Evento recibido, pero sin mensaje:", args);
-          }
-        }, (result) => {
-          if (result.status === Office.AsyncResultStatus.Failed) {
-            console.error("Error al añadir handler de mensaje:", result.error.message);
-          } else {
-            console.log("Handler de mensaje añadido correctamente");
-          }
-        });
-      } else {
-        console.warn("Host no compatible:", info.host);
-      }
-    });
   </script>
 </body>
 </html>
