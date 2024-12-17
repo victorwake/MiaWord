@@ -72,33 +72,43 @@
         </div>
     </div>
 
-  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <script>
-Office.onReady(() => {
-  console.log("Office.js está listo en el diálogo.");
-
-  // Envía un mensaje al host cuando Office.js está listo
-  if (Office.context.ui) {
-    console.log("Office.context.ui está disponible.");
-    Office.context.ui.messageParent("¡El cuadro de diálogo está listo!");
-
-    // Escucha mensajes del host
-    Office.context.ui.addHandlerAsync(
-      Office.EventType.DialogParentMessageReceived,
-      (arg) => {
-        console.log("Mensaje recibido del host:", arg.message);
-
-        const mensajeElement = document.getElementById("mensaje1");
-        if (mensajeElement) {
-          mensajeElement.innerText = `Mensaje recibido del host: ${arg.message}`;
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script>
+      Office.onReady(() => {
+        console.log("Office.js está listo en el diálogo.");
+    
+        // Envía un mensaje al host cuando Office.js está listo
+        if (Office.context.ui) {
+          console.log("Office.context.ui está disponible.");
+          Office.context.ui.messageParent("¡El cuadro de diálogo está listo!");
+    
+          // Escucha mensajes del host
+          Office.context.ui.addHandlerAsync(
+            Office.EventType.DialogParentMessageReceived,
+            (arg) => {
+              console.log("Mensaje recibido del host:", arg.message);
+    
+              const mensajeElement = document.getElementById("mensaje1");
+              if (mensajeElement) {
+                mensajeElement.innerText = `Mensaje recibido del host: ${arg.message}`;
+              }
+            },
+            (asyncResult) => {
+              if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+                console.error("Error al registrar el manejador:", asyncResult.error.message);
+              } else {
+                console.log("Manejador de mensajes del host registrado correctamente.");
+              }
+            }
+          );
         }
+      });
+    
+      function close() {
+        // Envía un mensaje al host para cerrar el cuadro de diálogo
+        Office.context.ui.messageParent("cerrar");
       }
-    );
-  }
-});
-
-
-  </script>
-  
+    </script>
+    
 </body>
 </html>
