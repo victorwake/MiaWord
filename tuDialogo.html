@@ -87,10 +87,14 @@
             Office.EventType.DialogParentMessageReceived,
             (arg) => {
               console.log("Mensaje recibido del host:", arg.message);
-              const mensajes = arg.message.split('|');
-              const mensaje1 = mensajes[0] || " ";
-              const mensaje2 = mensajes[1] || " ";
-    
+              dataCode = arg.message;
+              if (typeof dataCode === "string") {
+                dataCode = JSON.parse(dataCode); // Parsear JSON a objeto/array
+              }
+              // Guardar los mensajes en variables separadas
+              const mensaje1 = mensajes[0] || "Mensaje 1 no disponible";
+              const mensaje2 = mensajes[1] || "Mensaje 2 no disponible";
+            
               const mensajeElement = document.getElementById("mensaje1");
               const mensajeElement2 = document.getElementById("mensaje2");
               if (mensajeElement1) {
