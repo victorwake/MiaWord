@@ -1,41 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo de Office</title>
+  <title>Diálogo de Office 5</title>
 </head>
 <body>
-  <h1>¡Este es el diálogo!</h1>
-  <p id="mensaje">La ventana se abrió correctamente.</p>
+  <h2 id="message">Esperando mensaje del complemento...</h2>
+@@ -24,10 +24,10 @@ <h2 id="message">Esperando mensaje del complemento...</h2>
 
-  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-  <script>
-   Office.onReady(() => {
-  console.log("Office.js está listo en el diálogo.");
+    // Configurar el observer para observar cambios en el #message
+    const messageElement = document.getElementById('message');
+    const messageParent = messageElement.parentNode;
+     observer.observe(messageParent, { childList: true, subtree: true });
+      console.log('Observador del DOM iniciado');
+    
 
-  if (Office.context.ui) {
-    console.log("Office.context.ui está disponible.");
-
-    // Agregar el handler para recibir mensajes
-    Office.context.ui.addHandlerAsync(
-      Office.EventType.DialogMessageReceived,
-      (arg) => {
-        console.log("Mensaje recibido:", arg.message);
-        const mensajeElement = document.getElementById("mensaje");
-        if (mensajeElement) {
-          mensajeElement.innerText = `Mensaje recibido: ${arg.message}`;
-        } else {
-          console.error("Elemento con id='mensaje' no encontrado.");
-        }
+    Office.onReady(function (info) {
+      console.log("Office.onReady ejecutado:", info);
+@@ -60,6 +60,9 @@ <h2 id="message">Esperando mensaje del complemento...</h2>
+      } else {
+        console.warn("Host no compatible:", info.host);
       }
-    );
-  } else {
-    console.error("Office.context.ui no está disponible.");
-  }
-});
-
+      requestAnimationFrame(() => {
+        messageElement.textContent = "Mensaje del complemento: " + args.message;
+    });
+    });
   </script>
-  
 </body>
-</html>
