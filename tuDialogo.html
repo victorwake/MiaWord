@@ -3,11 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo de Office</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+  <link rel="stylesheet" href="office-context.css">
+  <title>Propuesta</title>
 </head>
 <body>
-  <h1>¡Este es el diálogo nuevo!</h1>
-  <p id="mensaje">La ventana se abrió correctamente.</p>
+
+  <div class="swal2-container swal2-center swal2-backdrop-show" style="overflow-y: auto;">
+    <div aria-labelledby="swal2-title column" aria-describedby="swal2-content"
+        class="swal2-popup swal2-modal swal2-icon-info swal2-show" tabindex="-1" role="dialog" aria-live="assertive"
+        aria-modal="true" style="width: 920px;">
+        <div class="swal2-header">
+            <div class="swal2-icon swal2-info icon-info-xl swal2-icon-show" style="display: flex;">
+                <div class="swal2-icon-content">i</div>
+            </div><img class="swal2-image" style="display: none;">
+            <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento del ooooo66
+            </h2>
+        </div>
+        <div class="swal2-content container-info">
+            <div id="swal2-content" class="swal2-html-container" style="display: block;"><br> <b
+                    style="font-size:16px; padding-bottom:20px;">Propuesta</b><br>
+                <div id="proposals-container">
+                    <div class="flex">
+                        <div style="color: #929292; line-height: 20px; border-radius: 10px; border: 1px solid #DDD; padding: 12px; margin: 15px 5px;">
+                            <div class="flex justify-between gap-12">
+                                <div class="margin-b">
+                                    <span class="font-semibold"
+                                        style="position: absolute; padding: 3px; margin-top: -26px; background: #fff; color: #41a04d;">Propuesta
+                                        1</span>
+                                    <span id="mensaje1" class="font-p">
+                                        
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div style="color: #929292; line-height: 20px; border-radius: 10px; border: 1px solid #DDD; padding: 12px; margin: 15px 5px;">
+                            <div class="flex justify-between gap-12">
+                                <div class="margin-b">
+                                    <span class="font-semibold"
+                                        style="position: absolute; padding: 3px; margin-top: -26px; background: #fff; color: #41a04d;">
+                                        Propuesta 2
+                                    </span>
+                                    <span>
+                                        Aca mostrar el segundo
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swal2-actions">
+                <button type="button" class="swal2-confirm swal2-styled" aria-label=""
+                    style="display: inline-block; background-color: rgb(64, 160, 76);">
+                    OK
+                </button>
+            </div>
+
+        </div>
+    </div>
 
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
@@ -25,7 +88,7 @@ Office.onReady(() => {
       (arg) => {
         console.log("Mensaje recibido del host:", arg.message);
 
-        const mensajeElement = document.getElementById("mensaje");
+        const mensajeElement = document.getElementById("mensaje1");
         if (mensajeElement) {
           mensajeElement.innerText = `Mensaje recibido del host: ${arg.message}`;
         }
