@@ -74,46 +74,68 @@
 
     <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
     <script>
-      Office.onReady(() => {
-        console.log("Office.js está listo en el diálogo.");
-    
-        // Envía un mensaje al host cuando Office.js está listo
-        if (Office.context.ui) {
-          console.log("Office.context.ui está disponible.");
-          Office.context.ui.messageParent("¡El cuadro de diálogo está listo!");
-    
-          // Escucha mensajes del host
-          Office.context.ui.addHandlerAsync(
-            Office.EventType.DialogParentMessageReceived,
-            (arg) => {
-              console.log("Mensaje recibido del host:", arg.message);
-              dataCode = arg.message;
-              if (typeof dataCode === "string") {
-                dataCode = JSON.parse(dataCode); // Parsear JSON a objeto/array
-              }
-              // Guardar los mensajes en variables separadas
-              const mensaje1 = dataCode[0] || "Mensaje 1 no disponible";
-              const mensaje2 = dataCode[1] || "Mensaje 2 no disponible";
-            
-              const mensajeElement = document.getElementById("mensaje1");
-              const mensajeElement2 = document.getElementById("mensaje2");
-              if (mensajeElement1) {
-                mensajeElement1.innerText = mensaje1;
-              }
-              if (mensajeElement2) {
-                mensajeElement2.innerText = mensaje2;
-              }
-            },
-            (asyncResult) => {
-              if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-                console.error("Error al registrar el manejador:", asyncResult.error.message);
-              } else {
-                console.log("Manejador de mensajes del host registrado correctamente.");
-              }
-            }
-          );
+     Office.onReady(() => {
+  console.log("Office.js está listo en el diálogo.");
+
+  if (Office.context.ui) {
+    console.log("Office.context.ui está disponible.");
+    Office.context.ui.messageParent("¡El cuadro de diálogo está listo!");
+
+    // Escucha mensajes del host
+    Office.context.ui.addHandlerAsync(
+      Office.EventType.DialogParentMessageReceived,
+      (arg) => {
+        console.log("Mensaje recibido del host:", arg.message);
+
+        let dataCode;
+
+        try {
+          // Verificar si el mensaje es un JSON válido
+          if (typeof arg.message === "string" && isJsonString(arg.message)) {
+            dataCode = JSON.parse(arg.message);
+          } else {
+            console.warn("Mensaje no es JSON válido:", arg.message);
+            dataCode = ["Mensaje 1 no disponible", "Mensaje 2 no disponible"];
+          }
+
+          // Guardar los mensajes en variables separadas
+          const mensaje1 = dataCode[0] || "Mensaje 1 no disponible";
+          const mensaje2 = dataCode[1] || "Mensaje 2 no disponible";
+
+          // Obtener los elementos HTML
+          const mensajeElement1 = document.getElementById("mensaje1");
+          const mensajeElement2 = document.getElementById("mensaje2");
+
+          // Asignar los mensajes a los elementos HTML
+          if (mensajeElement1) mensajeElement1.innerText = mensaje1;
+          if (mensajeElement2) mensajeElement2.innerText = mensaje2;
+
+          console.log("Mensajes mostrados correctamente:", mensaje1, mensaje2);
+        } catch (e) {
+          console.error("Error al parsear JSON:", e.message);
         }
-      });
+      },
+      (asyncResult) => {
+        if (asyncResult.status === Office.AsyncResultStatus.Failed) {
+          console.error("Error al registrar el manejador:", asyncResult.error.message);
+        } else {
+          console.log("Manejador de mensajes del host registrado correctamente.");
+        }
+      }
+    );
+  }
+});
+
+// Función para validar si una cadena es JSON válida
+function isJsonString(str) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
     
       document.addEventListener("DOMContentLoaded", () => {
       const btncClose = document.getElementById("close");
@@ -133,4 +155,3 @@
     
 </body>
 </html>
-
