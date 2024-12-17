@@ -92,8 +92,8 @@
                 dataCode = JSON.parse(dataCode); // Parsear JSON a objeto/array
               }
               // Guardar los mensajes en variables separadas
-              const mensaje1 = mensajes[0] || "Mensaje 1 no disponible";
-              const mensaje2 = mensajes[1] || "Mensaje 2 no disponible";
+              const mensaje1 = dataCode[0] || "Mensaje 1 no disponible";
+              const mensaje2 = dataCode[1] || "Mensaje 2 no disponible";
             
               const mensajeElement = document.getElementById("mensaje1");
               const mensajeElement2 = document.getElementById("mensaje2");
@@ -133,3 +133,4 @@
     
 </body>
 </html>
+
