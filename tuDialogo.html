@@ -21,7 +21,7 @@
             <div class="swal2-icon swal2-info icon-info-xl swal2-icon-show" style="display: flex;">
                 <div class="swal2-icon-content">i</div>
             </div><img class="swal2-image" style="display: none;">
-            <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento del nuevo
+            <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento NUEVO
             </h2>
         </div>
         <div class="swal2-content container-info">
@@ -106,9 +106,10 @@
       });
     
       function close() {
-        // Envía un mensaje al host para cerrar el cuadro de diálogo
+        console.log("Enviando mensaje 'cerrar' al host...");
         Office.context.ui.messageParent("cerrar");
       }
+
     </script>
     
 </body>
