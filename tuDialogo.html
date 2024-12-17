@@ -1,28 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo de Office 5</title>
+  <title>Diálogo de Office</title>
 </head>
 <body>
-  <h2 id="message">Esperando mensaje del complemento...</h2>
-@@ -24,10 +24,10 @@ <h2 id="message">Esperando mensaje del complemento...</h2>
+  <h1>¡Este es el diálogo nuevo!</h1>
+  <p id="mensaje">La ventana se abrió correctamente.</p>
 
-    // Configurar el observer para observar cambios en el #message
-    const messageElement = document.getElementById('message');
-    const messageParent = messageElement.parentNode;
-     observer.observe(messageParent, { childList: true, subtree: true });
-      console.log('Observador del DOM iniciado');
-    
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <script>
+Office.onReady(() => {
+  console.log("Office.js está listo en el diálogo.");
 
-    Office.onReady(function (info) {
-      console.log("Office.onReady ejecutado:", info);
-@@ -60,6 +60,9 @@ <h2 id="message">Esperando mensaje del complemento...</h2>
-      } else {
-        console.warn("Host no compatible:", info.host);
+  // Envía un mensaje al host cuando Office.js está listo
+  if (Office.context.ui) {
+    console.log("Office.context.ui está disponible.");
+    Office.context.ui.messageParent("¡El cuadro de diálogo está listo!");
+
+    // Escucha mensajes del host
+    Office.context.ui.addHandlerAsync(
+      Office.EventType.DialogParentMessageReceived,
+      (arg) => {
+        console.log("Mensaje recibido del host:", arg.message);
+
+        const mensajeElement = document.getElementById("mensaje");
+        if (mensajeElement) {
+          mensajeElement.innerText = `Mensaje recibido del host: ${arg.message}`;
+        }
       }
-      requestAnimationFrame(() => {
-        messageElement.textContent = "Mensaje del complemento: " + args.message;
-    });
-    });
+    );
+  }
+});
+
+
   </script>
+  
 </body>
+</html>
