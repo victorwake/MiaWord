@@ -21,7 +21,7 @@
             <div class="swal2-icon swal2-info icon-info-xl swal2-icon-show" style="display: flex;">
                 <div class="swal2-icon-content">i</div>
             </div><img class="swal2-image" style="display: none;">
-            <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento NUEVO
+            <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento del Nuevo orden
             </h2>
         </div>
         <div class="swal2-content container-info">
@@ -63,10 +63,9 @@
                 </div>
             </div>
             <div class="swal2-actions">
-                <button  type="button" class="swal2-confirm swal2-styled" aria-label=""
-                    style="display: inline-block; background-color: rgb(64, 160, 76);"
-                    onclick="close()">
-                    OK
+                <button id="close" type="button" class="swal2-confirm swal2-styled" aria-label=""
+                  style="display: inline-block; background-color: rgb(64, 160, 76);">
+                  OK
                 </button>
             </div>
 
@@ -105,12 +104,22 @@
         }
       });
     
-      function close() {
-        console.log("Enviando mensaje 'cerrar' al host...");
-        Office.context.ui.messageParent("cerrar");
+      document.addEventListener("DOMContentLoaded", () => {
+      const btncClose = document.getElementById("close");
+      
+      if (btncClose) {
+        btncClose.addEventListener("click", () => {
+          console.log("Botón OK clickeado. Enviando mensaje 'cerrar' al host...");
+          Office.context.ui.messageParent("cerrar");
+        });
+      } else {
+        console.error("El botón 'btncCloser' no se encontró.");
       }
+    });
+
 
     </script>
     
 </body>
 </html>
+
