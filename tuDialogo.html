@@ -3,68 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diálogo de Office 5</title>
+  <title>Diálogo de Office</title>
 </head>
 <body>
-  <h2 id="message">Esperando mensaje del complemento...</h2>
+  <h1>¡Este es el diálogo!</h1>
+  <p id="mensaje">La ventana se abrió correctamente.</p>
 
-  <!-- Asegúrate de cargar Office.js -->
   <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
   <script>
-  <script>
-  Office.onReady(function (info) {
-    console.log("Office.onReady ejecutado:", info);
+   Office.onReady(() => {
+  console.log("Office.js está listo en el diálogo.");
 
-    if (info.host === Office.HostType.Word || info.host === Office.HostType.Excel || info.host === Office.HostType.PowerPoint) {
-      console.log("Host correcto:", info.host);
+  if (Office.context.ui) {
+    console.log("Office.context.ui está disponible.");
 
-      // Añadir handler para recibir mensajes
-      Office.context.ui.addHandlerAsync(Office.EventType.DialogMessageReceived, (args) => {
-        console.log("Mensaje recibido en el diálogo:", args.message);
-
-        if (args && args.message && args.message.alternatives) {
-          const alternatives = args.message.alternatives;
-
-          // Renderizar el contenido recibido en los spans
-          const proposalsContainer = document.getElementById("proposals-container");
-          if (proposalsContainer) {
-            proposalsContainer.innerHTML = ""; // Limpiar contenido previo
-
-            alternatives.forEach((alt, index) => {
-              const proposalHTML = `
-                <div class="flex">
-                  <div style="color: #929292; line-height: 20px; border-radius: 10px; border: 1px solid #DDD; padding: 12px; margin: 15px 5px;">
-                    <div class="flex justify-between gap-12">
-                      <div class="margin-b">
-                        <span class="font-semibold"
-                              style="position: absolute; padding: 3px; margin-top: -26px; background: #fff; color: #41a04d;">
-                          Propuesta ${index + 1}
-                        </span>
-                        <span>
-                          ${alt}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              `;
-              proposalsContainer.insertAdjacentHTML("beforeend", proposalHTML);
-            });
-          }
-        }
-      }, (result) => {
-        if (result.status === Office.AsyncResultStatus.Failed) {
-          console.error("Error al añadir handler de mensaje:", result.error.message);
+    // Agregar el handler para recibir mensajes
+    Office.context.ui.addHandlerAsync(
+      Office.EventType.DialogMessageReceived,
+      (arg) => {
+        console.log("Mensaje recibido:", arg.message);
+        const mensajeElement = document.getElementById("mensaje");
+        if (mensajeElement) {
+          mensajeElement.innerText = `Mensaje recibido: ${arg.message}`;
         } else {
-          console.log("Handler de mensaje añadido correctamente");
+          console.error("Elemento con id='mensaje' no encontrado.");
         }
-      });
-    } else {
-      console.warn("Host no compatible:", info.host);
-    }
-  });
-</script>
+      }
+    );
+  } else {
+    console.error("Office.context.ui no está disponible.");
+  }
+});
 
   </script>
+  
 </body>
 </html>
