@@ -21,7 +21,7 @@
             <div class="swal2-icon swal2-info icon-info-xl swal2-icon-show" style="display: flex;">
                 <div class="swal2-icon-content">i</div>
             </div><img class="swal2-image" style="display: none;">
-            <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento del Nuevo orden
+            <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento del ooooo66
             </h2>
         </div>
         <div class="swal2-content container-info">
@@ -52,8 +52,8 @@
                                         style="position: absolute; padding: 3px; margin-top: -26px; background: #fff; color: #41a04d;">
                                         Propuesta 2
                                     </span>
-                                    <span>
-                                        Aca mostrar el segundo
+                                    <span id="mensaje2" class="font-p">
+                                        
                                     </span>
                                 </div>
 
@@ -87,10 +87,17 @@
             Office.EventType.DialogParentMessageReceived,
             (arg) => {
               console.log("Mensaje recibido del host:", arg.message);
+              const mensajes = arg.message.split('|');
+              const mensaje1 = mensajes[0] || " ";
+              const mensaje2 = mensajes[1] || " ";
     
               const mensajeElement = document.getElementById("mensaje1");
-              if (mensajeElement) {
-                mensajeElement.innerText = `Mensaje recibido del host: ${arg.message}`;
+              const mensajeElement2 = document.getElementById("mensaje2");
+              if (mensajeElement1) {
+                mensajeElement1.innerText = mensaje1;
+              }
+              if (mensajeElement2) {
+                mensajeElement2.innerText = mensaje2;
               }
             },
             (asyncResult) => {
@@ -122,4 +129,3 @@
     
 </body>
 </html>
-
