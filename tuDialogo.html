@@ -1,176 +1,39 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="office-context.css">
-  <title>Propuesta</title>
+  <title>Diálogo</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 </head>
-
 <body>
+  <h1>Datos Recibidos</h1>
+  <div id="data-container"></div>
+  <button id="close-dialog">Cerrar</button>
 
+  <script>
+    Office.onReady(() => {
+      console.log("Office.js está listo en el diálogo.");
 
-  <div class="swal2-container swal2-center swal2-backdrop-show" style="overflow-y: auto;">
-    <div aria-labelledby="swal2-title column" aria-describedby="swal2-content"
-      class="swal2-popup swal2-modal swal2-icon-info swal2-show" tabindex="-1" role="dialog" aria-live="assertive"
-      aria-modal="true" style="width: 920px;">
-      <div class="swal2-header">
-        <div class="swal2-icon swal2-info icon-info-xl swal2-icon-show" style="display: flex;">
-          <div class="swal2-icon-content">i</div>
-        </div><img class="swal2-image">
-        <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">
-        </h2>
-        <div id="loading-index" class="loader"></div>
-      </div>
-      <div class="swal2-content container-info">
+      // Escuchar mensajes desde el host
+      Office.context.ui.addHandlerAsync(
+        Office.EventType.DialogMessageReceived,
+        (arg) => {
+          try {
+            const data = JSON.parse(arg.message); // Convertir el mensaje en un objeto
+            console.log("Datos recibidos desde el host:", data);
 
-        <div id="body-card" style="display: none;">
-
-          <div id="swal2-content" class="swal2-html-container" style="display: block;"><br> <b
-              style="font-size:16px; padding-bottom:20px;">Propuesta</b><br>
-            <div id="proposals-container">
-              <div class="flex">
-                <div
-                  style="color: #929292; line-height: 20px; border-radius: 10px; border: 1px solid #DDD; padding: 12px; margin: 15px 5px;">
-                  <div class="flex justify-between gap-12">
-                    <div class="margin-b">
-                      <span class="font-semibold"
-                        style="position: absolute; padding: 3px; margin-top: -26px; background: #fff; color: #41a04d;">Propuesta
-                        1</span>
-                      <span id="mensaje1" class="font-p">
-
-                      </span>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex">
-                <div
-                  style="color: #929292; line-height: 20px; border-radius: 10px; border: 1px solid #DDD; padding: 12px; margin: 15px 5px;">
-                  <div class="flex justify-between gap-12">
-                    <div class="margin-b">
-                      <span class="font-semibold"
-                        style="position: absolute; padding: 3px; margin-top: -26px; background: #fff; color: #41a04d;">
-                        Propuesta 2
-                      </span>
-                      <span id="mensaje2" class="font-p">
-
-                      </span>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="swal2-actions">
-            <button id="close" type="button" class="swal2-confirm swal2-styled" aria-label=""
-              style="display: inline-block; background-color: rgb(64, 160, 76);">
-              OK
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
-    <script>
-      Office.onReady(() => {
-        console.log("Office.js está listo en el diálogo.");
-
-        if (Office.context.ui) {
-          console.log("Office.context.ui está disponible.");
-          Office.context.ui.messageParent("¡El cuadro de diálogo está listo!");
-
-          // Escucha mensajes del host
-          Office.context.ui.addHandlerAsync(
-            Office.EventType.DialogParentMessageReceived,
-            (arg) => {
-              console.log("Mensaje recibido del host:", arg.message);
-
-              try {
-                // Verificar si el mensaje recibido es un objeto ya parseado
-                const dataCode = typeof arg.message === "object" ? arg.message : JSON.parse(arg.message);
-
-                // Extraer las propiedades del objeto
-                const title = dataCode.title || "Título no disponible";
-                const mensaje1 = dataCode.message1 || "Mensaje 1 no disponible";
-                const mensaje2 = dataCode.message2 || "Mensaje 2 no disponible";
-
-                // Actualizar el DOM con los mensajes
-                const titleElement = document.getElementById("swal2-title");
-                const mensajeElement1 = document.getElementById("mensaje1");
-                const mensajeElement2 = document.getElementById("mensaje2");
-
-                const bodyCard = document.getElementById("body-card");
-                const loadingElement = document.getElementById("loading-index");
-
-                if (titleElement) titleElement.innerText = title;
-                if (mensajeElement1) mensajeElement1.innerText = mensaje1;
-                if (mensajeElement2) mensajeElement2.innerText = mensaje2;
-
-                if (loadingElement) {
-                  loadingElement.style.display = "none";
-                }
-
-                if (bodyCard) {
-                  bodyCard.style.display = "block";
-                }
-
-                console.log("Mensajes mostrados correctamente:", title, mensaje1, mensaje2);
-              } catch (e) {
-                console.error("Error al procesar el mensaje:", e.message);
-              }
-            },
-            (asyncResult) => {
-              if (asyncResult.status === Office.AsyncResultStatus.Failed) {
-                console.error("Error al registrar el manejador:", asyncResult.error.message);
-              } else {
-                console.log("Manejador de mensajes del host registrado correctamente.");
-              }
-            }
-          );
+            // Mostrar los datos en el diálogo
+            document.getElementById("data-container").innerText = JSON.stringify(data, null, 2);
+          } catch (err) {
+            console.error("Error al procesar mensaje recibido:", err);
+          }
         }
+      );
+
+      // Botón para cerrar el diálogo
+      document.getElementById("close-dialog").addEventListener("click", () => {
+        Office.context.ui.messageParent("cerrar"); // Enviar un mensaje de cierre al host
       });
-
-
-      // Función para validar si una cadena es JSON válida
-      function isJsonString(str) {
-        try {
-          JSON.parse(str);
-          return true;
-        } catch (e) {
-          return false;
-        }
-      }
-
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const btncClose = document.getElementById("close");
-
-        if (btncClose) {
-          btncClose.addEventListener("click", () => {
-            console.log("Botón OK clickeado. Enviando mensaje 'cerrar' al host...");
-            Office.context.ui.messageParent("cerrar");
-          });
-        } else {
-          console.error("El botón 'btncCloser' no se encontró.");
-        }
-      });
-
-
-    </script>
-
+    });
+  </script>
 </body>
-
 </html>
