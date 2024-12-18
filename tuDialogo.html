@@ -24,7 +24,7 @@
         <div class="swal2-icon swal2-info icon-info-xl swal2-icon-show" style="display: flex;">
           <div class="swal2-icon-content">i</div>
         </div><img class="swal2-image">
-        <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento del ooooo66
+        <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">
         </h2>
         <div id="loading-index" class="loader"></div>
       </div>
@@ -98,34 +98,23 @@
             (arg) => {
               console.log("Mensaje recibido del host:", arg.message);
 
-              let dataCode;
-
               try {
-                // Verificar si el mensaje es un JSON válido
-                if (typeof arg.message === "string" && isJsonString(arg.message)) {
-                  dataCode = JSON.parse(arg.message);
-                } else {
-                  console.warn("Mensaje no es JSON válido:", arg.message);
-                  dataCode = {
-                    title: "Título no disponible",
-                    message1: "Mensaje 1 no disponible",
-                    message2: "Mensaje 2 no disponible",
-                  };
-                }
+                // Verificar si el mensaje recibido es un objeto ya parseado
+                const dataCode = typeof arg.message === "object" ? arg.message : JSON.parse(arg.message);
 
-                // Guardar los mensajes en variables separadas
+                // Extraer las propiedades del objeto
                 const title = dataCode.title || "Título no disponible";
                 const mensaje1 = dataCode.message1 || "Mensaje 1 no disponible";
                 const mensaje2 = dataCode.message2 || "Mensaje 2 no disponible";
 
-                const titleElement = document.getElementById("title");
+                // Actualizar el DOM con los mensajes
+                const titleElement = document.getElementById("swal2-title");
                 const mensajeElement1 = document.getElementById("mensaje1");
                 const mensajeElement2 = document.getElementById("mensaje2");
 
-                const badyCard = document.getElementById("body-card");
+                const bodyCard = document.getElementById("body-card");
                 const loadingElement = document.getElementById("loading-index");
 
-                // Actualizar el DOM con los datos
                 if (titleElement) titleElement.innerText = title;
                 if (mensajeElement1) mensajeElement1.innerText = mensaje1;
                 if (mensajeElement2) mensajeElement2.innerText = mensaje2;
@@ -134,13 +123,13 @@
                   loadingElement.style.display = "none";
                 }
 
-                if (badyCard) {
-                  badyCard.style.display = "block";
+                if (bodyCard) {
+                  bodyCard.style.display = "block";
                 }
 
                 console.log("Mensajes mostrados correctamente:", title, mensaje1, mensaje2);
               } catch (e) {
-                console.error("Error al parsear JSON:", e.message);
+                console.error("Error al procesar el mensaje:", e.message);
               }
             },
             (asyncResult) => {
