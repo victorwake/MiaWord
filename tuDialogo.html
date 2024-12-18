@@ -29,6 +29,12 @@
         <div id="loading-index" class="loader"></div>
         <div id="correct" style="display: none;">
           <span>Cumple los requerimientos legales</span>
+          <div class="swal2-actions">
+            <button id="close1" type="button" class="swal2-confirm swal2-styled" aria-label=""
+              style="display: inline-block; background-color: rgb(64, 160, 76);">
+              OK
+            </button>
+          </div>
         </div>
       </div>
       <div class="swal2-content container-info">
@@ -95,7 +101,6 @@
           console.log("Office.context.ui está disponible.");
           Office.context.ui.messageParent("¡El cuadro de diálogo está listo!");
 
-          // Escucha mensajes del host
           Office.context.ui.addHandlerAsync(
             Office.EventType.DialogParentMessageReceived,
             (arg) => {
@@ -134,14 +139,14 @@
                 }
 
                 if (badyCard) {
-                  if (mensaje1 !== "no disponible"){
+                  if (mensaje1 !== "no disponible") {
                     badyCard.style.display = "block";
-                    
-                  }else{
+
+                  } else {
                     const correctRes = document.getElementById("correct");
                     correctRes.style.display = "block";
                   }
-                  
+
                 }
 
                 console.log("Mensajes mostrados correctamente:", mensaje1, mensaje2);
@@ -160,7 +165,6 @@
         }
       });
 
-      // Función para validar si una cadena es JSON válida
       function isJsonString(str) {
         try {
           JSON.parse(str);
@@ -172,18 +176,21 @@
 
 
       document.addEventListener("DOMContentLoaded", () => {
-        const btncClose = document.getElementById("close");
+        const buttonIds = ["close", "close1"];
 
-        if (btncClose) {
-          btncClose.addEventListener("click", () => {
-            console.log("Botón OK clickeado. Enviando mensaje 'cerrar' al host...");
-            Office.context.ui.messageParent("cerrar");
-          });
-        } else {
-          console.error("El botón 'btncCloser' no se encontró.");
-        }
+        buttonIds.forEach((id) => {
+          const button = document.getElementById(id);
+
+          if (button) {
+            button.addEventListener("click", () => {
+              console.log(`Botón con id '${id}' clickeado. Enviando mensaje 'cerrar' al host...`);
+              Office.context.ui.messageParent("cerrar");
+            });
+          } else {
+            console.error(`El botón con id '${id}' no se encontró.`);
+          }
+        });
       });
-
 
     </script>
 
