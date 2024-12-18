@@ -24,9 +24,12 @@
         <div class="swal2-icon swal2-info icon-info-xl swal2-icon-show" style="display: flex;">
           <div class="swal2-icon-content">i</div>
         </div><img class="swal2-image">
-        <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">Consentimiento del ooooo66
+        <h2 class="swal2-title title.info" id="swal2-title" style="display: block;">
         </h2>
         <div id="loading-index" class="loader"></div>
+        <div id="correct" style="display: none;">
+          <span>Cumple los requerimientos legales</span>
+        </div>
       </div>
       <div class="swal2-content container-info">
 
@@ -110,9 +113,11 @@
                 }
 
                 // Guardar los mensajes en variables separadas
-                const mensaje1 = dataCode[0] || "Mensaje 1 no disponible";
-                const mensaje2 = dataCode[1] || "Mensaje 2 no disponible";
+                const title = dataCode[0] || "no disponible";
+                const mensaje1 = dataCode[1] || "no disponible";
+                const mensaje2 = dataCode[2] || "no disponible";
 
+                const titleElement = document.getElementById("swal2-title");
                 const mensajeElement1 = document.getElementById("mensaje1");
                 const mensajeElement2 = document.getElementById("mensaje2");
 
@@ -120,6 +125,7 @@
 
                 const loadingElement = document.getElementById("loading-index");
 
+                if (titleElement) titleElement.innerText = title;
                 if (mensajeElement1) mensajeElement1.innerText = mensaje1;
                 if (mensajeElement2) mensajeElement2.innerText = mensaje2;
 
@@ -128,7 +134,14 @@
                 }
 
                 if (badyCard) {
-                  badyCard.style.display = "block";
+                  if (mensaje1 !== "no disponible"){
+                    badyCard.style.display = "block";
+                    
+                  }else{
+                    const correctRes = document.getElementById("correct");
+                    correctRes.style.display = "block";
+                  }
+                  
                 }
 
                 console.log("Mensajes mostrados correctamente:", mensaje1, mensaje2);
