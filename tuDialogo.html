@@ -106,20 +106,27 @@
                   dataCode = JSON.parse(arg.message);
                 } else {
                   console.warn("Mensaje no es JSON válido:", arg.message);
-                  dataCode = ["Mensaje 1 no disponible", "Mensaje 2 no disponible"];
+                  dataCode = {
+                    title: "Título no disponible",
+                    message1: "Mensaje 1 no disponible",
+                    message2: "Mensaje 2 no disponible",
+                  };
                 }
 
                 // Guardar los mensajes en variables separadas
-                const mensaje1 = dataCode[0] || "Mensaje 1 no disponible";
-                const mensaje2 = dataCode[1] || "Mensaje 2 no disponible";
+                const title = dataCode.title || "Título no disponible";
+                const mensaje1 = dataCode.message1 || "Mensaje 1 no disponible";
+                const mensaje2 = dataCode.message2 || "Mensaje 2 no disponible";
 
+                const titleElement = document.getElementById("title");
                 const mensajeElement1 = document.getElementById("mensaje1");
                 const mensajeElement2 = document.getElementById("mensaje2");
 
                 const badyCard = document.getElementById("body-card");
-
                 const loadingElement = document.getElementById("loading-index");
 
+                // Actualizar el DOM con los datos
+                if (titleElement) titleElement.innerText = title;
                 if (mensajeElement1) mensajeElement1.innerText = mensaje1;
                 if (mensajeElement2) mensajeElement2.innerText = mensaje2;
 
@@ -131,7 +138,7 @@
                   badyCard.style.display = "block";
                 }
 
-                console.log("Mensajes mostrados correctamente:", mensaje1, mensaje2);
+                console.log("Mensajes mostrados correctamente:", title, mensaje1, mensaje2);
               } catch (e) {
                 console.error("Error al parsear JSON:", e.message);
               }
@@ -146,6 +153,7 @@
           );
         }
       });
+
 
       // Función para validar si una cadena es JSON válida
       function isJsonString(str) {
